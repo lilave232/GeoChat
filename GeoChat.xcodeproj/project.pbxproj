@@ -1,0 +1,595 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E553675A21FD5BC400894493 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553675921FD5BC400894493 /* AppDelegate.swift */; };
+		E553675C21FD5BC500894493 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553675B21FD5BC500894493 /* FirstViewController.swift */; };
+		E553675E21FD5BC500894493 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553675D21FD5BC500894493 /* SecondViewController.swift */; };
+		E553676121FD5BC500894493 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E553675F21FD5BC500894493 /* Main.storyboard */; };
+		E553676321FD5BC800894493 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E553676221FD5BC800894493 /* Assets.xcassets */; };
+		E553676621FD5BC800894493 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E553676421FD5BC800894493 /* LaunchScreen.storyboard */; };
+		E553677121FD5BC900894493 /* GeoChatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553677021FD5BC900894493 /* GeoChatTests.swift */; };
+		E553677C21FD5BC900894493 /* GeoChatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553677B21FD5BC900894493 /* GeoChatUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E553676D21FD5BC900894493 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E553674E21FD5BC400894493 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E553675521FD5BC400894493;
+			remoteInfo = GeoChat;
+		};
+		E553677821FD5BC900894493 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E553674E21FD5BC400894493 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E553675521FD5BC400894493;
+			remoteInfo = GeoChat;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		E553675621FD5BC400894493 /* GeoChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GeoChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E553675921FD5BC400894493 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E553675B21FD5BC500894493 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
+		E553675D21FD5BC500894493 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
+		E553676021FD5BC500894493 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E553676221FD5BC800894493 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E553676521FD5BC800894493 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E553676721FD5BC800894493 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E553676C21FD5BC900894493 /* GeoChatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GeoChatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E553677021FD5BC900894493 /* GeoChatTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoChatTests.swift; sourceTree = "<group>"; };
+		E553677221FD5BC900894493 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E553677721FD5BC900894493 /* GeoChatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GeoChatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E553677B21FD5BC900894493 /* GeoChatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoChatUITests.swift; sourceTree = "<group>"; };
+		E553677D21FD5BC900894493 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E553675321FD5BC400894493 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E553676921FD5BC900894493 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E553677421FD5BC900894493 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E553674D21FD5BC400894493 = {
+			isa = PBXGroup;
+			children = (
+				E553675821FD5BC400894493 /* GeoChat */,
+				E553676F21FD5BC900894493 /* GeoChatTests */,
+				E553677A21FD5BC900894493 /* GeoChatUITests */,
+				E553675721FD5BC400894493 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E553675721FD5BC400894493 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E553675621FD5BC400894493 /* GeoChat.app */,
+				E553676C21FD5BC900894493 /* GeoChatTests.xctest */,
+				E553677721FD5BC900894493 /* GeoChatUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E553675821FD5BC400894493 /* GeoChat */ = {
+			isa = PBXGroup;
+			children = (
+				E553675921FD5BC400894493 /* AppDelegate.swift */,
+				E553675B21FD5BC500894493 /* FirstViewController.swift */,
+				E553675D21FD5BC500894493 /* SecondViewController.swift */,
+				E553675F21FD5BC500894493 /* Main.storyboard */,
+				E553676221FD5BC800894493 /* Assets.xcassets */,
+				E553676421FD5BC800894493 /* LaunchScreen.storyboard */,
+				E553676721FD5BC800894493 /* Info.plist */,
+			);
+			path = GeoChat;
+			sourceTree = "<group>";
+		};
+		E553676F21FD5BC900894493 /* GeoChatTests */ = {
+			isa = PBXGroup;
+			children = (
+				E553677021FD5BC900894493 /* GeoChatTests.swift */,
+				E553677221FD5BC900894493 /* Info.plist */,
+			);
+			path = GeoChatTests;
+			sourceTree = "<group>";
+		};
+		E553677A21FD5BC900894493 /* GeoChatUITests */ = {
+			isa = PBXGroup;
+			children = (
+				E553677B21FD5BC900894493 /* GeoChatUITests.swift */,
+				E553677D21FD5BC900894493 /* Info.plist */,
+			);
+			path = GeoChatUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E553675521FD5BC400894493 /* GeoChat */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E553678021FD5BC900894493 /* Build configuration list for PBXNativeTarget "GeoChat" */;
+			buildPhases = (
+				E553675221FD5BC400894493 /* Sources */,
+				E553675321FD5BC400894493 /* Frameworks */,
+				E553675421FD5BC400894493 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GeoChat;
+			productName = GeoChat;
+			productReference = E553675621FD5BC400894493 /* GeoChat.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E553676B21FD5BC900894493 /* GeoChatTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E553678321FD5BC900894493 /* Build configuration list for PBXNativeTarget "GeoChatTests" */;
+			buildPhases = (
+				E553676821FD5BC900894493 /* Sources */,
+				E553676921FD5BC900894493 /* Frameworks */,
+				E553676A21FD5BC900894493 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E553676E21FD5BC900894493 /* PBXTargetDependency */,
+			);
+			name = GeoChatTests;
+			productName = GeoChatTests;
+			productReference = E553676C21FD5BC900894493 /* GeoChatTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		E553677621FD5BC900894493 /* GeoChatUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E553678621FD5BC900894493 /* Build configuration list for PBXNativeTarget "GeoChatUITests" */;
+			buildPhases = (
+				E553677321FD5BC900894493 /* Sources */,
+				E553677421FD5BC900894493 /* Frameworks */,
+				E553677521FD5BC900894493 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E553677921FD5BC900894493 /* PBXTargetDependency */,
+			);
+			name = GeoChatUITests;
+			productName = GeoChatUITests;
+			productReference = E553677721FD5BC900894493 /* GeoChatUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E553674E21FD5BC400894493 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1010;
+				LastUpgradeCheck = 1010;
+				ORGANIZATIONNAME = "Avery Pozzobon";
+				TargetAttributes = {
+					E553675521FD5BC400894493 = {
+						CreatedOnToolsVersion = 10.1;
+					};
+					E553676B21FD5BC900894493 = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = E553675521FD5BC400894493;
+					};
+					E553677621FD5BC900894493 = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = E553675521FD5BC400894493;
+					};
+				};
+			};
+			buildConfigurationList = E553675121FD5BC400894493 /* Build configuration list for PBXProject "GeoChat" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E553674D21FD5BC400894493;
+			productRefGroup = E553675721FD5BC400894493 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E553675521FD5BC400894493 /* GeoChat */,
+				E553676B21FD5BC900894493 /* GeoChatTests */,
+				E553677621FD5BC900894493 /* GeoChatUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E553675421FD5BC400894493 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E553676621FD5BC800894493 /* LaunchScreen.storyboard in Resources */,
+				E553676321FD5BC800894493 /* Assets.xcassets in Resources */,
+				E553676121FD5BC500894493 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E553676A21FD5BC900894493 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E553677521FD5BC900894493 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E553675221FD5BC400894493 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E553675E21FD5BC500894493 /* SecondViewController.swift in Sources */,
+				E553675A21FD5BC400894493 /* AppDelegate.swift in Sources */,
+				E553675C21FD5BC500894493 /* FirstViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E553676821FD5BC900894493 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E553677121FD5BC900894493 /* GeoChatTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E553677321FD5BC900894493 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E553677C21FD5BC900894493 /* GeoChatUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E553676E21FD5BC900894493 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E553675521FD5BC400894493 /* GeoChat */;
+			targetProxy = E553676D21FD5BC900894493 /* PBXContainerItemProxy */;
+		};
+		E553677921FD5BC900894493 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E553675521FD5BC400894493 /* GeoChat */;
+			targetProxy = E553677821FD5BC900894493 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		E553675F21FD5BC500894493 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E553676021FD5BC500894493 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		E553676421FD5BC800894493 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E553676521FD5BC800894493 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		E553677E21FD5BC900894493 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		E553677F21FD5BC900894493 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E553678121FD5BC900894493 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = MG6XE6UDN5;
+				INFOPLIST_FILE = GeoChat/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = veriplat.GeoChat;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E553678221FD5BC900894493 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = MG6XE6UDN5;
+				INFOPLIST_FILE = GeoChat/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = veriplat.GeoChat;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		E553678421FD5BC900894493 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = MG6XE6UDN5;
+				INFOPLIST_FILE = GeoChatTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = veriplat.GeoChatTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GeoChat.app/GeoChat";
+			};
+			name = Debug;
+		};
+		E553678521FD5BC900894493 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = MG6XE6UDN5;
+				INFOPLIST_FILE = GeoChatTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = veriplat.GeoChatTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GeoChat.app/GeoChat";
+			};
+			name = Release;
+		};
+		E553678721FD5BC900894493 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = MG6XE6UDN5;
+				INFOPLIST_FILE = GeoChatUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = veriplat.GeoChatUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = GeoChat;
+			};
+			name = Debug;
+		};
+		E553678821FD5BC900894493 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = MG6XE6UDN5;
+				INFOPLIST_FILE = GeoChatUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = veriplat.GeoChatUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = GeoChat;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E553675121FD5BC400894493 /* Build configuration list for PBXProject "GeoChat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E553677E21FD5BC900894493 /* Debug */,
+				E553677F21FD5BC900894493 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E553678021FD5BC900894493 /* Build configuration list for PBXNativeTarget "GeoChat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E553678121FD5BC900894493 /* Debug */,
+				E553678221FD5BC900894493 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E553678321FD5BC900894493 /* Build configuration list for PBXNativeTarget "GeoChatTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E553678421FD5BC900894493 /* Debug */,
+				E553678521FD5BC900894493 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E553678621FD5BC900894493 /* Build configuration list for PBXNativeTarget "GeoChatUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E553678721FD5BC900894493 /* Debug */,
+				E553678821FD5BC900894493 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E553674E21FD5BC400894493 /* Project object */;
+}
