@@ -1,0 +1,24 @@
+{
+    "images": [
+        {
+            "filename": "Dark Local Chat.png",
+            "idiom": "universal",
+            "scale": "1x"
+        },
+        {
+            "filename": "Dark Local Chat@2x.png",
+            "idiom": "universal",
+            "scale": "2x"
+        },
+        {
+            "filename": "Dark Local Chat@3x.png",
+            "idiom": "universal",
+            "scale": "3x"
+        }
+    ],
+    "info": {
+        "author": "xcode",
+        "template-rendering-intent": "template",
+        "version": 1
+    }
+}

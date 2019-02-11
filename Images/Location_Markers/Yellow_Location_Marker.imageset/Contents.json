@@ -1,0 +1,24 @@
+{
+    "images": [
+        {
+            "filename": "Yellow Location Marker.png",
+            "idiom": "universal",
+            "scale": "1x"
+        },
+        {
+            "filename": "Yellow Location Marker@2x.png",
+            "idiom": "universal",
+            "scale": "2x"
+        },
+        {
+            "filename": "Yellow Location Marker@3x.png",
+            "idiom": "universal",
+            "scale": "3x"
+        }
+    ],
+    "info": {
+        "author": "xcode",
+        "template-rendering-intent": "template",
+        "version": 1
+    }
+}
