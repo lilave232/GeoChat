@@ -17,4 +17,6 @@ class ChatNameCell: UITableViewCell {
     @IBOutlet weak var chatTime: UILabel!
     @IBOutlet weak var iconImage: UIImageView!
     
+    
+    
 }

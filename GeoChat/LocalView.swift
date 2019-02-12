@@ -8,6 +8,8 @@
 
 import UIKit
 import Alamofire
+import CoreLocation
+
 
 class LocalView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -18,12 +20,16 @@ class LocalView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         controller = self.tabBarController as? TabBarController
-    }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         local_chats = []
         local_chats = controller!.local_chats
         tableView.reloadData()
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        print("LOCAL VIEW SHOWING")
+        if (TabBarController.location != nil) {
+            GetChats(location: TabBarController.location!.coordinate)
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -104,6 +110,34 @@ class LocalView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         dateFormatter.dateFormat = "hh:mm a"
         
         return dateFormatter.string(from: dt!)
+    }
+    
+    
+    func GetChats(location: CLLocationCoordinate2D) {
+        self.controller!.local_chats = []
+        let parameters: Parameters=[
+            "Username":UserDefaults.standard.object(forKey: "Username")!,
+            "Longitude":location.longitude,
+            "Latitude":location.latitude
+        ]
+        let URL_USER_UPDATE_LOCATION = AppDelegate.URLConnection + ":8081/GetMapChats"
+        Alamofire.request(URL_USER_UPDATE_LOCATION, method: .post, parameters: parameters).responseJSON
+            {
+                response in
+                print(response)
+                if let result = response.result.value {
+                    let jsonData = result as! NSDictionary
+                    if(!(jsonData.value(forKey: "error") as! Bool)){
+                        let array = jsonData.value(forKey: "chats") as! [NSDictionary]
+                        self.controller!.local_chats = array
+                        print("Checked Chats")
+                        self.local_chats = self.controller!.local_chats
+                        self.tableView.reloadData()
+                    }else{
+                        print("Unsuccessful")
+                    }
+                }
+        }
     }
 }
 

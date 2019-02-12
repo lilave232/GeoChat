@@ -46,6 +46,7 @@ class MapView: UIViewController, CLLocationManagerDelegate, updateMap {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         checkLocationAuthorizationStatus()
+        addRadiusCircle(location: locValue!)
     }
     
     
@@ -72,6 +73,7 @@ class MapView: UIViewController, CLLocationManagerDelegate, updateMap {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if (locValue == nil) {
             locValue = manager.location
+            TabBarController.location = locValue
             mapView.camera = GMSCameraPosition(target: locValue!.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
             UpdateLocationFunction(Location: (manager.location)!)
             self.addRadiusCircle(location:(manager.location)!)
@@ -79,6 +81,7 @@ class MapView: UIViewController, CLLocationManagerDelegate, updateMap {
             let distanceInMeters = manager.location?.distance(from: locValue!)
             if (distanceInMeters! > Double(100)) {
                 locValue = manager.location
+                TabBarController.location = locValue
                 mapView.camera = GMSCameraPosition(target: locValue!.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
                 UpdateLocationFunction(Location: (manager.location)!)
                 self.addRadiusCircle(location:(manager.location)!)

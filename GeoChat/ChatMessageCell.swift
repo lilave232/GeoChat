@@ -24,7 +24,7 @@ class ChatMessageCell: UITableViewCell {
     
     @IBOutlet weak var messageLabel: UILabel!
     
-    
+    @IBOutlet weak var messageFrom: UILabel!
     
     
     

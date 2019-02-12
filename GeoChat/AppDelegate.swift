@@ -25,6 +25,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+        if (TabBarController.socket.isConnected) {
+            let JSONString = "{\"Type\": 4,\"Data\":{\"Chat\":{\"Username\":\"\(UserDefaults.standard.string(forKey: "Username")!)\"}}}"
+            TabBarController.socket.write(string: JSONString)
+            TabBarController.socket.disconnect(forceTimeout: 0)
+            TabBarController.socket.delegate = nil
+            TabBarController.mdelegate = nil
+        }
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -35,6 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             TabBarController.socket.write(string: JSONString)
             TabBarController.socket.disconnect(forceTimeout: 0)
             TabBarController.socket.delegate = nil
+            TabBarController.mdelegate = nil
         }
     }
 
@@ -56,6 +64,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             TabBarController.socket.write(string: JSONString)
             TabBarController.socket.disconnect(forceTimeout: 0)
             TabBarController.socket.delegate = nil
+            TabBarController.mdelegate = nil
         }
     }
 

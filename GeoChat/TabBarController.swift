@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import Starscream
+import CoreLocation
 
 protocol MessageReceivedDelegate: class {
     func updateMessages(_ messages: String?)
@@ -19,6 +20,8 @@ class TabBarController: UITabBarController, WebSocketDelegate {
     static var mdelegate: MessageReceivedDelegate?
     static var socket = WebSocket(url: URL(string: AppDelegate.URLConnection + ":8081/")!, protocols: ["echo-protocol"])
     weak var messageDelegate: MessageReceivedDelegate?
+    static var location: CLLocation? = nil
+    
     func websocketDidConnect(socket: WebSocketClient) {
         print("Connected")
         let JSONString = "{\"Type\": 0,\"Data\":{\"User\":{\"Username\":\"\(UserDefaults.standard.string(forKey: "Username")! ?? "")\"}}}"
@@ -27,7 +30,7 @@ class TabBarController: UITabBarController, WebSocketDelegate {
     }
     
     func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
-        
+        TabBarController.mdelegate = nil
     }
     
     func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {

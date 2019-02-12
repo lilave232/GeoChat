@@ -13,6 +13,7 @@
 		E51B15AC2204298500EE6164 /* ImageCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51B15AB2204298500EE6164 /* ImageCollectionView.swift */; };
 		E5386415220FBA87009ABFC8 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5386414220FBA87009ABFC8 /* ChatView.swift */; };
 		E5386417220FC413009ABFC8 /* ChatMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5386416220FC413009ABFC8 /* ChatMessageCell.swift */; };
+		E542F23E221246F200CE8E70 /* chatSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E542F23D221246F200CE8E70 /* chatSettings.swift */; };
 		E553675A21FD5BC400894493 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553675921FD5BC400894493 /* AppDelegate.swift */; };
 		E553675C21FD5BC500894493 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553675B21FD5BC500894493 /* MapView.swift */; };
 		E553675E21FD5BC500894493 /* LocalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553675D21FD5BC500894493 /* LocalView.swift */; };
@@ -53,6 +54,7 @@
 		E51B15AB2204298500EE6164 /* ImageCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionView.swift; sourceTree = "<group>"; };
 		E5386414220FBA87009ABFC8 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		E5386416220FC413009ABFC8 /* ChatMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageCell.swift; sourceTree = "<group>"; };
+		E542F23D221246F200CE8E70 /* chatSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chatSettings.swift; sourceTree = "<group>"; };
 		E553675621FD5BC400894493 /* GeoChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GeoChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E553675921FD5BC400894493 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E553675B21FD5BC500894493 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 				E553678F21FD67F400894493 /* Register.swift */,
 				E553678921FD5D3D00894493 /* Assets.xcassets */,
 				E553675F21FD5BC500894493 /* Main.storyboard */,
+				E542F23D221246F200CE8E70 /* chatSettings.swift */,
 				E5386416220FC413009ABFC8 /* ChatMessageCell.swift */,
 				E5386414220FBA87009ABFC8 /* ChatView.swift */,
 				E5DE2910220E478100C82C27 /* TabBarController.swift */,
@@ -386,6 +389,7 @@
 			files = (
 				E553679021FD67F400894493 /* Register.swift in Sources */,
 				E51B15AC2204298500EE6164 /* ImageCollectionView.swift in Sources */,
+				E542F23E221246F200CE8E70 /* chatSettings.swift in Sources */,
 				E5DE2911220E478100C82C27 /* TabBarController.swift in Sources */,
 				E51B15A822040F9500EE6164 /* AddChat.swift in Sources */,
 				E5386415220FBA87009ABFC8 /* ChatView.swift in Sources */,

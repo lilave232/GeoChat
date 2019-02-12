@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import Starscream
+import Alamofire
 
 class ChatView: UIViewController, UITableViewDelegate, UITableViewDataSource, MessageReceivedDelegate {
     
@@ -18,11 +19,14 @@ class ChatView: UIViewController, UITableViewDelegate, UITableViewDataSource, Me
         TabBarController.socket.write(string: JSONString)
     }
     
+    
+    
     func updateMessages(_ messages: String?) {
         let messageJSON = stringToJSON(message: messages!)
         print(messageJSON)
         message.insert((messageJSON["message"] as! String), at: 0)
         from.insert((messageJSON["userFrom"] as! String), at:0)
+        color.insert((messageJSON["color"] as? NSString)!.integerValue, at:0)
         tableView.reloadData()
     }
     
@@ -33,6 +37,7 @@ class ChatView: UIViewController, UITableViewDelegate, UITableViewDataSource, Me
     var chat_id = ""
     var chat:[String] = []
     var message:[String] = []
+    var color:[Int] = []
     var from:[String] = []
     var date:[String] = []
     var initY = CGFloat(0)
@@ -72,6 +77,7 @@ class ChatView: UIViewController, UITableViewDelegate, UITableViewDataSource, Me
         TabBarController.mdelegate = self
         let JSONString = "{\"Type\": 2,\"Data\":{\"Chat\":{\"chatID\":\"\(chat_id ?? "")\", \"Username\":\"\(UserDefaults.standard.string(forKey: "Username")!)\"}}}"
         TabBarController.socket.write(string: JSONString)
+        GetChat(chatID: chat_id)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -81,7 +87,11 @@ class ChatView: UIViewController, UITableViewDelegate, UITableViewDataSource, Me
     
     
     @IBAction func sendMessageAction(_ sender: Any) {
-        let JSONString = "{\"Type\": 1,\"Data\":{\"Message\":{\"message\":\"\(messageTextField.text ?? "")\", \"chatID\":\"\(chat_id )\", \"userFrom\":\"\(UserDefaults.standard.string(forKey: "Username")!)\"}}}"
+        var color = 0xFFDC00
+        if (UserDefaults.standard.object(forKey: "MessageColor") != nil) {
+            color = UserDefaults.standard.integer(forKey: "MessageColor")
+        }
+        let JSONString = "{\"Type\": 1,\"Data\":{\"Message\":{\"message\":\"\(messageTextField.text ?? "")\", \"chatID\":\"\(chat_id )\", \"userFrom\":\"\(UserDefaults.standard.string(forKey: "Username")!)\",\"color\":\"\(color)\"}}}"
         TabBarController.socket.write(string: JSONString)
         messageTextField.text = ""
     }
@@ -101,6 +111,7 @@ class ChatView: UIViewController, UITableViewDelegate, UITableViewDataSource, Me
         //Access message cell class
         let cell = tableView.dequeueReusableCell(withIdentifier: "messageCell")! as! ChatMessageCell
         //Set messageLabel as the message
+        cell.messageLabel.sizeToFit()
         cell.messageLabel.text = message[indexPath.row]
         //Set so that cell doesn't display color when touched
         cell.selectionStyle = .none
@@ -124,10 +135,11 @@ class ChatView: UIViewController, UITableViewDelegate, UITableViewDataSource, Me
             cell.chatBubbleLeading.constant = frombubbleTrailing
             cell.messageTrailing.constant = frommessageLeading
             cell.messageLeading.constant = frommessageTrailing
+            cell.messageFrom.text = ""
             //change color of text to Black for User message
             cell.messageLabel.textColor = UIColor.black
             //change color of chatBubble to Orange for User message
-            cell.chatBubble.backgroundColor = UIColor(red:0.97, green:0.66, blue:0.24, alpha:1.0) //Orange
+            cell.chatBubble.backgroundColor = uiColorFromHex(rgbValue: color[indexPath.row]) //Orange
         } else {
             //If message sent not sent by user flip trailing and leading distances back to normal
             cell.chatBubbleTrailing.constant = frombubbleTrailing
@@ -136,10 +148,19 @@ class ChatView: UIViewController, UITableViewDelegate, UITableViewDataSource, Me
             cell.messageLeading.constant = frommessageLeading
             //change color of text to white for message not sent by user
             cell.messageLabel.textColor = UIColor.white
+            cell.messageFrom.text = from[indexPath.row]
             //change color of chatBubble to Pink for non-User message
-            cell.chatBubble.backgroundColor = UIColor(red:0.96, green:0.43, blue:0.83, alpha:1.0) //Pink
+            cell.chatBubble.backgroundColor = uiColorFromHex(rgbValue: color[indexPath.row]) //Pink
         }
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -166,5 +187,44 @@ class ChatView: UIViewController, UITableViewDelegate, UITableViewDataSource, Me
             jsonData = ["String":"Empty" as AnyObject]
         }
         return jsonData!
+    }
+    func uiColorFromHex(rgbValue: Int) -> UIColor {
+        
+        let red =   CGFloat((rgbValue & 0xFF0000) >> 16) / 0xFF
+        let green = CGFloat((rgbValue & 0x00FF00) >> 8) / 0xFF
+        let blue =  CGFloat(rgbValue & 0x0000FF) / 0xFF
+        let alpha = CGFloat(1.0)
+        
+        return UIColor(red: red, green: green, blue: blue, alpha: alpha)
+    }
+    
+    func GetChat(chatID: String?) {
+        let parameters: Parameters=[
+            "chatID":chat_id,
+        ]
+        let URL_USER_GET_CHAT = AppDelegate.URLConnection + ":8081/GetChat"
+        Alamofire.request(URL_USER_GET_CHAT, method: .post, parameters: parameters).responseJSON
+            {
+                response in
+                print(response)
+                if let result = response.result.value {
+                    let jsonData = result as! NSDictionary
+                    if(!(jsonData.value(forKey: "error") as! Bool)){
+                        let array = jsonData.value(forKey: "chats") as! [NSDictionary]
+                        array.forEach(
+                        {(dictionary) in
+                            let message = dictionary.value(forKey: "message") as? String
+                            let from = dictionary.value(forKey: "userFrom") as? String
+                            let color = dictionary.value(forKey: "color") as? Int
+                            self.message.insert(message!, at: 0)
+                            self.from.insert(from!, at:0)
+                            self.color.insert(color!, at:0)
+                        })
+                        self.tableView.reloadData()
+                    }else{
+                        print("Unsuccessful")
+                    }
+                }
+        }
     }
 }
