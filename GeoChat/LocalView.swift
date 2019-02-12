@@ -87,7 +87,7 @@ class LocalView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         vc.chat_id = id
         self.navigationController?.pushViewController(vc, animated: true)
     }
-    
+    //convert UTC to Local
     func UTCToLocal(date:String) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'"
