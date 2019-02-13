@@ -10,16 +10,18 @@ import Foundation
 import UIKit
 
 
-class ChatSettings: UIViewController {
+class ColorPicker: UIViewController {
     
     // RRGGBB hex colors in the same order as the image
     let colorArray = [ 0x000000, 0xfe0000, 0xff7900, 0xffb900, 0xffde00, 0xfcff00, 0xd2ff00, 0x05c000, 0x00c0a7, 0x0600ff, 0x6700bf, 0x9500c0, 0xbf0199, 0xffffff ]
     
+    var setting:String? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        if (UserDefaults.standard.object(forKey: "MessageColor") != nil) {
-            slider.value = Float(colorArray.firstIndex(where: { $0 == UserDefaults.standard.integer(forKey: "MessageColor")})!) + 0.5
-            selectedColorView.backgroundColor = uiColorFromHex(rgbValue: UserDefaults.standard.integer(forKey: "MessageColor"))
+        if (UserDefaults.standard.object(forKey: setting!) != nil) {
+            slider.value = Float(colorArray.firstIndex(where: { $0 == UserDefaults.standard.integer(forKey: setting!)})!) + 0.5
+            selectedColorView.backgroundColor = uiColorFromHex(rgbValue: UserDefaults.standard.integer(forKey: setting!))
         }
     }
     
@@ -27,7 +29,9 @@ class ChatSettings: UIViewController {
     @IBOutlet weak var slider: UISlider!
     @IBAction func sliderChanged(sender: AnyObject) {
         selectedColorView.backgroundColor = uiColorFromHex(rgbValue: colorArray[Int(slider.value)])
-        UserDefaults.standard.set(colorArray[Int(slider.value)], forKey: "MessageColor")
+        if (setting != nil) {
+            UserDefaults.standard.set(colorArray[Int(slider.value)], forKey: setting!)
+        }
     }
     
     func uiColorFromHex(rgbValue: Int) -> UIColor {

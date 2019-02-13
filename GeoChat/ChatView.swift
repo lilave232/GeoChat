@@ -26,7 +26,8 @@ class ChatView: UIViewController, UITableViewDelegate, UITableViewDataSource, Me
         print(messageJSON)
         message.insert((messageJSON["message"] as! String), at: 0)
         from.insert((messageJSON["userFrom"] as! String), at:0)
-        color.insert((messageJSON["color"] as? NSString)!.integerValue, at:0)
+        colorBack.insert((messageJSON["colorBack"] as? NSString)!.integerValue, at:0)
+        colorFront.insert((messageJSON["colorFront"] as? NSString)!.integerValue, at:0)
         tableView.reloadData()
     }
     
@@ -37,7 +38,8 @@ class ChatView: UIViewController, UITableViewDelegate, UITableViewDataSource, Me
     var chat_id = ""
     var chat:[String] = []
     var message:[String] = []
-    var color:[Int] = []
+    var colorBack:[Int] = []
+    var colorFront:[Int] = []
     var from:[String] = []
     var date:[String] = []
     var initY = CGFloat(0)
@@ -87,11 +89,15 @@ class ChatView: UIViewController, UITableViewDelegate, UITableViewDataSource, Me
     
     
     @IBAction func sendMessageAction(_ sender: Any) {
-        var color = 0xFFDC00
-        if (UserDefaults.standard.object(forKey: "MessageColor") != nil) {
-            color = UserDefaults.standard.integer(forKey: "MessageColor")
+        var colorBack = 0xFFDC00
+        var colorFront = 0x000000
+        if (UserDefaults.standard.object(forKey: "ColorBack") != nil) {
+            colorBack = UserDefaults.standard.integer(forKey: "ColorBack")
         }
-        let JSONString = "{\"Type\": 1,\"Data\":{\"Message\":{\"message\":\"\(messageTextField.text ?? "")\", \"chatID\":\"\(chat_id )\", \"userFrom\":\"\(UserDefaults.standard.string(forKey: "Username")!)\",\"color\":\"\(color)\"}}}"
+        if (UserDefaults.standard.object(forKey: "ColorFront") != nil) {
+            colorFront = UserDefaults.standard.integer(forKey: "ColorFront")
+        }
+        let JSONString = "{\"Type\": 1,\"Data\":{\"Message\":{\"message\":\"\(messageTextField.text ?? "")\", \"chatID\":\"\(chat_id )\", \"userFrom\":\"\(UserDefaults.standard.string(forKey: "Username")!)\",\"colorBack\":\"\(colorBack)\",\"colorFront\":\"\(colorFront)\"}}}"
         TabBarController.socket.write(string: JSONString)
         messageTextField.text = ""
     }
@@ -137,9 +143,9 @@ class ChatView: UIViewController, UITableViewDelegate, UITableViewDataSource, Me
             cell.messageLeading.constant = frommessageTrailing
             cell.messageFrom.text = ""
             //change color of text to Black for User message
-            cell.messageLabel.textColor = UIColor.black
+            cell.messageLabel.textColor = uiColorFromHex(rgbValue: colorFront[indexPath.row])
             //change color of chatBubble to Orange for User message
-            cell.chatBubble.backgroundColor = uiColorFromHex(rgbValue: color[indexPath.row]) //Orange
+            cell.chatBubble.backgroundColor = uiColorFromHex(rgbValue: colorBack[indexPath.row]) //Orange
         } else {
             //If message sent not sent by user flip trailing and leading distances back to normal
             cell.chatBubbleTrailing.constant = frombubbleTrailing
@@ -147,10 +153,10 @@ class ChatView: UIViewController, UITableViewDelegate, UITableViewDataSource, Me
             cell.messageTrailing.constant = frommessageTrailing
             cell.messageLeading.constant = frommessageLeading
             //change color of text to white for message not sent by user
-            cell.messageLabel.textColor = UIColor.white
+            cell.messageLabel.textColor = uiColorFromHex(rgbValue: colorFront[indexPath.row])
             cell.messageFrom.text = from[indexPath.row]
             //change color of chatBubble to Pink for non-User message
-            cell.chatBubble.backgroundColor = uiColorFromHex(rgbValue: color[indexPath.row]) //Pink
+            cell.chatBubble.backgroundColor = uiColorFromHex(rgbValue: colorBack[indexPath.row]) //Pink
         }
         return cell
     }
@@ -215,10 +221,12 @@ class ChatView: UIViewController, UITableViewDelegate, UITableViewDataSource, Me
                         {(dictionary) in
                             let message = dictionary.value(forKey: "message") as? String
                             let from = dictionary.value(forKey: "userFrom") as? String
-                            let color = dictionary.value(forKey: "color") as? Int
+                            let colorBack = dictionary.value(forKey: "colorBack") as? Int
+                            let colorFront = dictionary.value(forKey: "colorFront") as? Int
                             self.message.insert(message!, at: 0)
                             self.from.insert(from!, at:0)
-                            self.color.insert(color!, at:0)
+                            self.colorBack.insert(colorBack!, at:0)
+                            self.colorFront.insert(colorFront!, at:0)
                         })
                         self.tableView.reloadData()
                     }else{
