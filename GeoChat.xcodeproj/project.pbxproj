@@ -30,6 +30,7 @@
 		E5827DBD2213B203005CCEB2 /* FriendsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5827DBC2213B203005CCEB2 /* FriendsTableView.swift */; };
 		E5827DBF2213C388005CCEB2 /* AddFriends.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5827DBE2213C388005CCEB2 /* AddFriends.swift */; };
 		E5827DC12213C5AB005CCEB2 /* AddFriendsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5827DC02213C5AB005CCEB2 /* AddFriendsCell.swift */; };
+		E5C9DD5122158A1D00977C5C /* RequestsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C9DD5022158A1D00977C5C /* RequestsTableView.swift */; };
 		E5DE290F220E464000C82C27 /* ChatNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DE290E220E464000C82C27 /* ChatNameCell.swift */; };
 		E5DE2911220E478100C82C27 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DE2910220E478100C82C27 /* TabBarController.swift */; };
 /* End PBXBuildFile section */
@@ -83,6 +84,7 @@
 		E5827DBE2213C388005CCEB2 /* AddFriends.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriends.swift; sourceTree = "<group>"; };
 		E5827DC02213C5AB005CCEB2 /* AddFriendsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendsCell.swift; sourceTree = "<group>"; };
 		E5C33BC62201F2E300C6886F /* GeoChat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GeoChat.entitlements; sourceTree = "<group>"; };
+		E5C9DD5022158A1D00977C5C /* RequestsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestsTableView.swift; sourceTree = "<group>"; };
 		E5DE290E220E464000C82C27 /* ChatNameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatNameCell.swift; sourceTree = "<group>"; };
 		E5DE2910220E478100C82C27 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		F4F571431C5A01596DEC5B4F /* Pods-GeoChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GeoChat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GeoChat/Pods-GeoChat.debug.xcconfig"; sourceTree = "<group>"; };
@@ -157,6 +159,7 @@
 				E553678F21FD67F400894493 /* Register.swift */,
 				E553678921FD5D3D00894493 /* Assets.xcassets */,
 				E553675F21FD5BC500894493 /* Main.storyboard */,
+				E5C9DD5022158A1D00977C5C /* RequestsTableView.swift */,
 				E5827DC02213C5AB005CCEB2 /* AddFriendsCell.swift */,
 				E5827DBE2213C388005CCEB2 /* AddFriends.swift */,
 				E5827DBC2213B203005CCEB2 /* FriendsTableView.swift */,
@@ -411,6 +414,7 @@
 				E553678C21FD657800894493 /* LoginRegister.swift in Sources */,
 				E5827DB92213978E005CCEB2 /* FriendsCell.swift in Sources */,
 				E5386417220FC413009ABFC8 /* ChatMessageCell.swift in Sources */,
+				E5C9DD5122158A1D00977C5C /* RequestsTableView.swift in Sources */,
 				E5827DBD2213B203005CCEB2 /* FriendsTableView.swift in Sources */,
 				E5827DB722138961005CCEB2 /* ProfileSettings.swift in Sources */,
 				E5827DC12213C5AB005CCEB2 /* AddFriendsCell.swift in Sources */,

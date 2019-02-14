@@ -22,6 +22,7 @@ class AddFriends: UITableViewController, UISearchResultsUpdating {
     var Users:[String] = []
     var Friends:[String] = []
     var filteredUsers = [String]()
+    var Exclusions:[String] = []
     
     override func viewWillAppear(_ animated: Bool) {
         GetFriends(Username: UserDefaults.standard.string(forKey: "Username"))
@@ -70,7 +71,12 @@ class AddFriends: UITableViewController, UISearchResultsUpdating {
                 cell.grey = true
                 cell.addButton.tintColor = UIColor.lightGray
             }
-            cell.friendsLabel.text = filteredUsers[indexPath.row]
+            if (!Exclusions.contains(filteredUsers[indexPath.row])) {
+                cell.friendsLabel.text = filteredUsers[indexPath.row]
+            } else {
+                filteredUsers.remove(at: indexPath.row)
+                self.resultsController.tableView.reloadData()
+            }
         } else {
             cell.friendsLabel.text = ""
         }
@@ -120,12 +126,24 @@ class AddFriends: UITableViewController, UISearchResultsUpdating {
                 if let result = response.result.value {
                     let jsonData = result as! NSDictionary
                     if(!(jsonData.value(forKey: "error") as! Bool)){
-                        let array = jsonData.value(forKey: "chats") as! [NSDictionary]
+                        let array = jsonData.value(forKey: "values") as! [NSDictionary]
                         self.Friends = []
                         array.forEach(
                             {(dictionary) in
                                 let friend = dictionary.value(forKey: "Friend") as? String
                                 self.Friends.append(friend!)
+                        })
+                        let array2 = jsonData.value(forKey: "requested") as! [NSDictionary]
+                        array2.forEach(
+                            {(dictionary) in
+                                let friend = dictionary.value(forKey: "Friend") as? String
+                                self.Friends.append(friend!)
+                        })
+                        let array1 = jsonData.value(forKey: "requests") as! [NSDictionary]
+                        array1.forEach(
+                            {(dictionary) in
+                                let friend = dictionary.value(forKey: "Friend") as? String
+                                self.Exclusions.append(friend!)
                         })
                     }else{
                         print("Error Or No Friends")

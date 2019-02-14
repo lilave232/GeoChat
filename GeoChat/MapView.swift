@@ -46,7 +46,9 @@ class MapView: UIViewController, CLLocationManagerDelegate, updateMap {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         checkLocationAuthorizationStatus()
-        addRadiusCircle(location: locValue!)
+        if (locValue != nil) {
+            addRadiusCircle(location: locValue!)
+        }
     }
     
     

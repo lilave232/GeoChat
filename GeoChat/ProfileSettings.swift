@@ -20,6 +20,13 @@ class ProfileSettings: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var fullscreenLabel: UIButton!
+    
+    @IBOutlet weak var addFriendsLabel: UIButton!
+    
+    @IBOutlet weak var requestsLabel: UIButton!
+    
+    
     
     
     @IBAction func showFriendsView(_ sender: Any) {
@@ -55,6 +62,20 @@ class ProfileSettings: UIViewController, UITableViewDelegate, UITableViewDataSou
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        fullscreenLabel.titleLabel?.numberOfLines = 1
+        fullscreenLabel.titleLabel?.adjustsFontSizeToFitWidth = true
+        fullscreenLabel.titleLabel?.minimumScaleFactor = 0.8
+        
+        addFriendsLabel.titleLabel?.numberOfLines = 1
+        addFriendsLabel.titleLabel?.adjustsFontSizeToFitWidth = true
+        addFriendsLabel.titleLabel?.minimumScaleFactor = 0.8
+        
+        requestsLabel.titleLabel?.numberOfLines = 1
+        requestsLabel.titleLabel?.adjustsFontSizeToFitWidth = true
+        requestsLabel.titleLabel?.minimumScaleFactor = 0.8
+        
+        
         UsernameLabel.text = UserDefaults.standard.string(forKey: "Username")
         if (UserDefaults.standard.object(forKey: "ColorBack") != nil) {
             BackgroundColorButton.backgroundColor = uiColorFromHex(rgbValue: UserDefaults.standard.integer(forKey: "ColorBack"))
@@ -111,13 +132,17 @@ class ProfileSettings: UIViewController, UITableViewDelegate, UITableViewDataSou
                 if let result = response.result.value {
                     let jsonData = result as! NSDictionary
                     if(!(jsonData.value(forKey: "error") as! Bool)){
-                        let array = jsonData.value(forKey: "chats") as! [NSDictionary]
+                        let requests = jsonData.value(forKey: "pending") as! Int
+                        self.requestsLabel.setTitle("Requests(" + String(requests) + ")", for: .normal)
+                        let array = jsonData.value(forKey: "values") as! [NSDictionary]
                         array.forEach(
                             {(dictionary) in
                                 let friend = dictionary.value(forKey: "Friend") as? String
                                 self.Friends.append(friend!)
                         })
                     }else{
+                        let requests = 0
+                        self.requestsLabel.setTitle("Requests(" + String(requests) + ")", for: .normal)
                         print("Error Or No Friends")
                     }
                     self.tableView.reloadData()

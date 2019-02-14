@@ -8,6 +8,8 @@
 
 import UIKit
 import GoogleMaps
+import UserNotifications
+import Alamofire
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,7 +21,86 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         GMSServices.provideAPIKey(googleApiKey)
+        registerForPushNotifications()
+        UIApplication.shared.registerForRemoteNotifications()
+        application.applicationIconBadgeNumber = 0
+        if let payload = launchOptions?[UIApplication.LaunchOptionsKey.remoteNotification] as? NSDictionary, let identifier = payload["storyboardID"] as? String, let tab = payload["viewInTabBar"] as? Int {
+            let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+            let tabBarController = storyboard.instantiateViewController(withIdentifier: "TabBarController") as! TabBarController
+            
+            tabBarController.selectedIndex = tab
+            if (identifier != "") {
+                let desiredVC = storyboard.instantiateViewController(withIdentifier: identifier) as! UIViewController
+                if tabBarController.selectedIndex == tab{
+                    
+                    // Option 1: If you want to present
+                    tabBarController.selectedViewController?.show(desiredVC, sender: nil)
+                    
+                }
+            }
+            
+            //self.window = UIWindow.init(frame: UIScreen.main.bounds)
+            self.window?.rootViewController = tabBarController
+            //self.window?.makeKeyAndVisible()
+        }
         return true
+    }
+    
+    func registerForPushNotifications() {
+        UNUserNotificationCenter.current()
+            .requestAuthorization(options: [.alert, .sound, .badge]) {
+                [weak self] granted, error in
+                
+                print("Permission granted: \(granted)")
+                guard granted else { return }
+                self?.getNotificationSettings()
+        }
+    }
+    func getNotificationSettings() {
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            print("Notification settings: \(settings)")
+            guard settings.authorizationStatus == .authorized else { return }
+            DispatchQueue.main.async {
+                UIApplication.shared.registerForRemoteNotifications()
+            }
+        }
+    }
+    
+    func application(
+        _ application: UIApplication,
+        didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
+        ) {
+        let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
+        let token = tokenParts.joined()
+        UpdateToken(Username: UserDefaults.standard.string(forKey: "Username"), Token: token)
+        print("Device Token: \(token)")
+    }
+    
+    func UpdateToken(Username: String?, Token: String?) {
+        let parameters: Parameters=[
+            "Username":Username!,
+            "Token":Token!,
+        ]
+        let URL_USER_UPDATE_TOKEN = AppDelegate.URLConnection + ":8081/UpdateToken"
+        Alamofire.request(URL_USER_UPDATE_TOKEN, method: .post, parameters: parameters).responseJSON
+            {
+                response in
+                print(response)
+                if let result = response.result.value {
+                    let jsonData = result as! NSDictionary
+                    if(!(jsonData.value(forKey: "error") as! Bool)){
+                        print("Updated Token")
+                    }else{
+                        print("Token Could Not Be Updated")
+                    }
+                }
+        }
+    }
+    
+    func application(
+        _ application: UIApplication,
+        didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("Failed to register: \(error)")
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
