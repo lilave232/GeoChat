@@ -77,11 +77,7 @@ class ImageCollectionView: UIViewController, UICollectionViewDataSource, UIColle
         if let delegate = self.delegate {
             delegate.userChangedImage(imageString: "\(images[indexPath.row])_Location_Marker")
         }
-        dismiss(animated: true, completion: nil)
-    }
-    
-    @IBAction func backButton(_ sender: Any) {
-        self.presentingViewController!.dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
     
 }

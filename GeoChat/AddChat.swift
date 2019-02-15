@@ -21,7 +21,7 @@ class AddChat: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, I
     
     var imagePressed = ""
     
-    let availablePrivacySettings = ["All In Range", "Only Friends", "Invitation Only"]
+    let availablePrivacySettings = ["All In Range", "Only Friends", "Direct Message"]
     
     @IBOutlet weak var privacySettingsTextField: UITextField!
     
@@ -47,12 +47,17 @@ class AddChat: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, I
         self.hideKeyboardWhenTappedAround()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.isNavigationBarHidden = false
+    }
+    
     
     @IBAction func showImageSelection(_ sender: Any) {
         let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let vc1 = mainStoryboard.instantiateViewController(withIdentifier: "Image_Selection") as! ImageCollectionView
         vc1.delegate = self
-        self.present(vc1, animated: true, completion: nil)
+        self.show(vc1,sender:nil)
     }
     
     
@@ -62,10 +67,6 @@ class AddChat: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, I
         if (titleText.text! != "" && Location != nil) {
             CreateChat()
         }
-    }
-    
-    @IBAction func backButton(_ sender: Any) {
-        self.presentingViewController!.dismiss(animated: true, completion: nil)
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -105,7 +106,8 @@ class AddChat: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, I
                         //let vc = mainStoryboard.instantiateViewController(withIdentifier: "Map") as! MapView
                         //self.present(vc, animated: true, completion: nil)
                         self.delegate?.updateMap()
-                        self.dismiss(animated: false, completion: nil)
+                        //self.dismiss(animated: false, completion: nil)
+                        self.navigationController?.popViewController(animated: true)
                     }else{
                         print("Unsuccessful")
                     }

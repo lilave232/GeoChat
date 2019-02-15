@@ -51,13 +51,22 @@ class MapView: UIViewController, CLLocationManagerDelegate, updateMap {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.isNavigationBarHidden = true
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+    }
+    
     
     @IBAction func addChat(_ sender: Any) {
         let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let vc1 = mainStoryboard.instantiateViewController(withIdentifier: "AddChat") as! AddChat
         vc1.Location = locValue
         vc1.delegate = self
-        self.present(vc1, animated: true, completion: nil)
+        self.show(vc1,sender:nil)
     }
     
     
