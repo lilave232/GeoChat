@@ -25,6 +25,7 @@ class MapView: UIViewController, CLLocationManagerDelegate, updateMap {
     @IBOutlet weak var addChatButton: UIButton!
     var circ: GMSCircle? = nil
     var controller: TabBarController? = nil
+    var radius = 1000.00
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,6 +55,11 @@ class MapView: UIViewController, CLLocationManagerDelegate, updateMap {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.isNavigationBarHidden = true
+        if (UserDefaults.standard.object(forKey: "radius") != nil) {
+            radius = UserDefaults.standard.double(forKey: "radius")
+        } else {
+            UserDefaults.standard.set(1000.00,forKey:"radius")
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -100,19 +106,18 @@ class MapView: UIViewController, CLLocationManagerDelegate, updateMap {
         }
     }
     
-    let regionRadius: CLLocationDistance = 1000
-    
     func addRadiusCircle(location: CLLocation){
         mapView.clear()
         circ = nil
         if (circ == nil) {
-            circ = GMSCircle(position: location.coordinate, radius: 1000)
+            circ = GMSCircle(position: location.coordinate, radius: radius)
             circ!.fillColor = UIColor(hex: 0xFFDC00, a: 0.1)
             circ!.strokeColor = UIColor(hex: 0xFFDC00, a: 1)
             circ!.strokeWidth = 4
             circ!.map = mapView
         }
         GetChats(location: location.coordinate)
+        GetSubscribed()
     }
 
     func UpdateLocationFunction (Location: CLLocation) {
@@ -142,7 +147,8 @@ class MapView: UIViewController, CLLocationManagerDelegate, updateMap {
         let parameters: Parameters=[
             "Username":UserDefaults.standard.object(forKey: "Username")!,
             "Longitude":location.longitude,
-            "Latitude":location.latitude
+            "Latitude":location.latitude,
+            "Radius":UserDefaults.standard.double(forKey: "radius")
         ]
         let URL_USER_UPDATE_LOCATION = AppDelegate.URLConnection + "/GetMapChats"
         Alamofire.request(URL_USER_UPDATE_LOCATION, method: .post, parameters: parameters).responseJSON
@@ -175,6 +181,28 @@ class MapView: UIViewController, CLLocationManagerDelegate, updateMap {
                     print("Unsuccessful")
                 }
             }
+        }
+    }
+    func GetSubscribed() {
+        TabBarController.subscribed = []
+        let parameters: Parameters=[
+            "Username":UserDefaults.standard.object(forKey: "Username")!,
+        ]
+        let URL_USER_GET_SUBSCRIBED = AppDelegate.URLConnection + "/GetSubscribedChats"
+        Alamofire.request(URL_USER_GET_SUBSCRIBED, method: .post, parameters: parameters).responseJSON
+            {
+                response in
+                print(response)
+                if let result = response.result.value {
+                    let jsonData = result as! NSDictionary
+                    if(!(jsonData.value(forKey: "error") as! Bool)){
+                        let array = jsonData.value(forKey: "chats") as! [NSDictionary]
+                        print("Checked Chats")
+                        TabBarController.subscribed = array
+                    }else{
+                        print("Unsuccessful")
+                    }
+                }
         }
     }
     //MAPS API KEY AIzaSyCe1BfQ2Bdcb50fExIsxnGXgH9CzbbJ3nk

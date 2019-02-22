@@ -1,8 +1,8 @@
 //
-//  ProfileSettings.swift
+//  Settings.swift
 //  GeoChat
 //
-//  Created by Avery Pozzobon on 2019-02-12.
+//  Created by Avery Pozzobon on 2019-02-22.
 //  Copyright © 2019 Avery Pozzobon. All rights reserved.
 //
 
@@ -10,15 +10,12 @@ import Foundation
 import UIKit
 import Alamofire
 
-class ProfileSettings: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
+class ProfileSettings: UITableViewController {
     @IBOutlet weak var UsernameLabel: UILabel!
     
     @IBOutlet weak var BackgroundColorButton: UIButton!
     
     var Friends:[String] = []
-    
-    @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var fullscreenLabel: UIButton!
     
@@ -26,7 +23,7 @@ class ProfileSettings: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     @IBOutlet weak var requestsLabel: UIButton!
     
-    
+    @IBOutlet weak var kilometersLabel: UILabel!
     
     
     @IBAction func showFriendsView(_ sender: Any) {
@@ -43,6 +40,19 @@ class ProfileSettings: UIViewController, UITableViewDelegate, UITableViewDataSou
         self.show(vc1, sender:nil)
     }
     
+    @IBOutlet weak var kilometersSlider: UISlider!
+    
+    @IBAction func distanceChanged(_ sender: Any) {
+        if (kilometersSlider.value > 1000) {
+            kilometersLabel.text = String(format: "%.01f",Double(kilometersSlider.value/1000)) + "km"
+        } else {
+            kilometersLabel.text = String(format: "%.01f",Double(kilometersSlider.value)) + "m"
+        }
+        UserDefaults.standard.set(Double(kilometersSlider.value),forKey:"radius")
+    }
+    
+    
+    
     @IBOutlet weak var ForegroundColorButton: UIButton!
     
     
@@ -53,6 +63,8 @@ class ProfileSettings: UIViewController, UITableViewDelegate, UITableViewDataSou
         self.show(vc1, sender: nil)
     }
     
+    
+    
     @IBOutlet weak var previewBackground: UIView!
     
     @IBOutlet weak var previewForeground: UILabel!
@@ -60,9 +72,15 @@ class ProfileSettings: UIViewController, UITableViewDelegate, UITableViewDataSou
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        kilometersSlider.value = Float(UserDefaults.standard.double(forKey: "radius"))
+        if (kilometersSlider.value > 1000) {
+            kilometersLabel.text = String(format: "%.01f",Double(kilometersSlider.value/1000)) + "km"
+        } else {
+            kilometersLabel.text = String(format: "%.01f",Double(kilometersSlider.value)) + "m"
+        }
         fullscreenLabel.titleLabel?.numberOfLines = 1
         fullscreenLabel.titleLabel?.adjustsFontSizeToFitWidth = true
         fullscreenLabel.titleLabel?.minimumScaleFactor = 0.8
@@ -86,37 +104,6 @@ class ProfileSettings: UIViewController, UITableViewDelegate, UITableViewDataSou
             previewForeground.textColor = uiColorFromHex(rgbValue: UserDefaults.standard.integer(forKey: "ColorFront"))
         }
         GetFriends(Username: UsernameLabel.text)
-        self.tableView.reloadData()
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Friends.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "friendCell")! as! FriendsCell
-        cell.Friend.text = Friends[indexPath.row]
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
-        let Unfriend = UITableViewRowAction(style: .normal, title: "Unfriend") { action, index in
-            self.RemoveFriend(Username: UserDefaults.standard.string(forKey: "Username"), Friend: self.Friends[editActionsForRowAt.row])
-            self.Friends.remove(at: editActionsForRowAt.row)
-            self.tableView.reloadData()
-        }
-        Unfriend.backgroundColor = .red
-        
-        let Message = UITableViewRowAction(style: .normal, title: "Message") { action, index in
-            print("favorite button tapped")
-        }
-        Message.backgroundColor = .blue
-        
-        return [Message, Unfriend]
-    }
-    
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
     }
     
     func GetFriends(Username: String?) {
@@ -145,7 +132,6 @@ class ProfileSettings: UIViewController, UITableViewDelegate, UITableViewDataSou
                         self.requestsLabel.setTitle("Requests(" + String(requests) + ")", for: .normal)
                         print("Error Or No Friends")
                     }
-                    self.tableView.reloadData()
                 }
         }
     }
@@ -167,7 +153,6 @@ class ProfileSettings: UIViewController, UITableViewDelegate, UITableViewDataSou
                     }else{
                         print("Friend Could Not Be Removed")
                     }
-                    self.tableView.reloadData()
                 }
         }
     }
@@ -181,4 +166,5 @@ class ProfileSettings: UIViewController, UITableViewDelegate, UITableViewDataSou
         
         return UIColor(red: red, green: green, blue: blue, alpha: alpha)
     }
+    
 }

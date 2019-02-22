@@ -89,13 +89,24 @@ class LocalView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
-        let Subscribe = UITableViewRowAction(style: .normal, title: "Subscribe") { action, index in
-            let id = (self.local_chats[editActionsForRowAt.row].value(forKey: "chat_id") as! String)
-            self.Subscribe(chatID: id)
+        if (!TabBarController.subscribed.contains {$0.value(forKey: "chatID") as! String == (local_chats[editActionsForRowAt.row].value(forKey: "chat_id") as! String)})
+        {
+            print("Not In Subscribed")
+            let Subscribe = UITableViewRowAction(style: .normal, title: "Subscribe") { action, index in
+                let id = (self.local_chats[editActionsForRowAt.row].value(forKey: "chat_id") as! String)
+                self.Subscribe(chatID: id)
+            }
+            Subscribe.backgroundColor = .blue
+            return [Subscribe]
+        } else {
+            print("In Subscribed")
+            let Unsubscribe = UITableViewRowAction(style: .normal, title: "Unsubscribe") { action, index in
+                let id = (self.local_chats[editActionsForRowAt.row].value(forKey: "chat_id") as! String)
+                self.Unsubscribe(chatID: id)
+            }
+            Unsubscribe.backgroundColor = .blue
+            return [Unsubscribe]
         }
-        Subscribe.backgroundColor = .blue
-        
-        return [Subscribe]
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -133,7 +144,8 @@ class LocalView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let parameters: Parameters=[
             "Username":UserDefaults.standard.object(forKey: "Username")!,
             "Longitude":location.longitude,
-            "Latitude":location.latitude
+            "Latitude":location.latitude,
+            "Radius":UserDefaults.standard.double(forKey: "radius")
         ]
         let URL_USER_UPDATE_LOCATION = AppDelegate.URLConnection + "/GetMapChats"
         Alamofire.request(URL_USER_UPDATE_LOCATION, method: .post, parameters: parameters).responseJSON
@@ -169,6 +181,55 @@ class LocalView: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     let jsonData = result as! NSDictionary
                     if(!(jsonData.value(forKey: "error") as! Bool)){
                         print("Subscribed")
+                        self.GetChats(location: TabBarController.location!.coordinate)
+                        self.GetSubscribed()
+                    }else{
+                        print("Unsuccessful")
+                    }
+                }
+                self.tableView.reloadData()
+        }
+    }
+    func Unsubscribe(chatID: String) {
+        let parameters: Parameters=[
+            "member":UserDefaults.standard.object(forKey: "Username")!,
+            "chatID":chatID,
+        ]
+        let URL_USER_UNSUBSCRIBE = AppDelegate.URLConnection + "/Unsubscribe"
+        Alamofire.request(URL_USER_UNSUBSCRIBE, method: .post, parameters: parameters).responseJSON
+        {
+            response in
+            print(response)
+            if let result = response.result.value {
+                let jsonData = result as! NSDictionary
+                if(!(jsonData.value(forKey: "error") as! Bool)){
+                    print("Unsubscribed")
+                    self.GetChats(location: TabBarController.location!.coordinate)
+                    self.GetSubscribed()
+                }else{
+                    print("Unsuccessful")
+                }
+            }
+            self.tableView.reloadData()
+        }
+    }
+    func GetSubscribed() {
+        TabBarController.subscribed = []
+        let parameters: Parameters=[
+            "Username":UserDefaults.standard.object(forKey: "Username")!,
+        ]
+        let URL_USER_GET_SUBSCRIBED = AppDelegate.URLConnection + "/GetSubscribedChats"
+        Alamofire.request(URL_USER_GET_SUBSCRIBED, method: .post, parameters: parameters).responseJSON
+            {
+                response in
+                print(response)
+                if let result = response.result.value {
+                    let jsonData = result as! NSDictionary
+                    if(!(jsonData.value(forKey: "error") as! Bool)){
+                        let array = jsonData.value(forKey: "chats") as! [NSDictionary]
+                        print("Checked Chats")
+                        TabBarController.subscribed = array
+                        self.tableView.reloadData()
                     }else{
                         print("Unsuccessful")
                     }

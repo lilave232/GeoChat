@@ -25,9 +25,9 @@
 		E553678C21FD657800894493 /* LoginRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553678B21FD657800894493 /* LoginRegister.swift */; };
 		E553678E21FD67CE00894493 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553678D21FD67CE00894493 /* Login.swift */; };
 		E553679021FD67F400894493 /* Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553678F21FD67F400894493 /* Register.swift */; };
+		E55F38EC221FDE3800E98537 /* ProfileSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55F38EB221FDE3800E98537 /* ProfileSettings.swift */; };
 		E56DCA4822162E2D00709C1F /* SubscribedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56DCA4722162E2D00709C1F /* SubscribedView.swift */; };
 		E56DCA4A2216339900709C1F /* SubscribedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56DCA492216339900709C1F /* SubscribedCell.swift */; };
-		E5827DB722138961005CCEB2 /* ProfileSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5827DB622138961005CCEB2 /* ProfileSettings.swift */; };
 		E5827DB92213978E005CCEB2 /* FriendsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5827DB82213978E005CCEB2 /* FriendsCell.swift */; };
 		E5827DBD2213B203005CCEB2 /* FriendsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5827DBC2213B203005CCEB2 /* FriendsTableView.swift */; };
 		E5827DBF2213C388005CCEB2 /* AddFriends.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5827DBE2213C388005CCEB2 /* AddFriends.swift */; };
@@ -81,9 +81,9 @@
 		E553678B21FD657800894493 /* LoginRegister.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRegister.swift; sourceTree = "<group>"; };
 		E553678D21FD67CE00894493 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		E553678F21FD67F400894493 /* Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Register.swift; sourceTree = "<group>"; };
+		E55F38EB221FDE3800E98537 /* ProfileSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettings.swift; sourceTree = "<group>"; };
 		E56DCA4722162E2D00709C1F /* SubscribedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribedView.swift; sourceTree = "<group>"; };
 		E56DCA492216339900709C1F /* SubscribedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribedCell.swift; sourceTree = "<group>"; };
-		E5827DB622138961005CCEB2 /* ProfileSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettings.swift; sourceTree = "<group>"; };
 		E5827DB82213978E005CCEB2 /* FriendsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsCell.swift; sourceTree = "<group>"; };
 		E5827DBC2213B203005CCEB2 /* FriendsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableView.swift; sourceTree = "<group>"; };
 		E5827DBE2213C388005CCEB2 /* AddFriends.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriends.swift; sourceTree = "<group>"; };
@@ -166,13 +166,13 @@
 				E553678F21FD67F400894493 /* Register.swift */,
 				E553678921FD5D3D00894493 /* Assets.xcassets */,
 				E553675F21FD5BC500894493 /* Main.storyboard */,
+				E55F38EB221FDE3800E98537 /* ProfileSettings.swift */,
 				E585EA53221A7AD000C91437 /* ColorPicker_1Sample.swift */,
 				E56DCA492216339900709C1F /* SubscribedCell.swift */,
 				E5C9DD5022158A1D00977C5C /* RequestsTableView.swift */,
 				E5827DC02213C5AB005CCEB2 /* AddFriendsCell.swift */,
 				E5827DBE2213C388005CCEB2 /* AddFriends.swift */,
 				E5827DBC2213B203005CCEB2 /* FriendsTableView.swift */,
-				E5827DB622138961005CCEB2 /* ProfileSettings.swift */,
 				E5827DB82213978E005CCEB2 /* FriendsCell.swift */,
 				E542F23D221246F200CE8E70 /* ColorPicker.swift */,
 				E5386416220FC413009ABFC8 /* ChatMessageCell.swift */,
@@ -425,13 +425,13 @@
 				E5386417220FC413009ABFC8 /* ChatMessageCell.swift in Sources */,
 				E5C9DD5122158A1D00977C5C /* RequestsTableView.swift in Sources */,
 				E5827DBD2213B203005CCEB2 /* FriendsTableView.swift in Sources */,
-				E5827DB722138961005CCEB2 /* ProfileSettings.swift in Sources */,
 				E5827DC12213C5AB005CCEB2 /* AddFriendsCell.swift in Sources */,
 				E51B15AA220428E300EE6164 /* ImageCollectionCell.swift in Sources */,
 				E585EA54221A7AD000C91437 /* ColorPicker_1Sample.swift in Sources */,
 				E553678E21FD67CE00894493 /* Login.swift in Sources */,
 				E5DE290F220E464000C82C27 /* ChatNameCell.swift in Sources */,
 				E553675E21FD5BC500894493 /* LocalView.swift in Sources */,
+				E55F38EC221FDE3800E98537 /* ProfileSettings.swift in Sources */,
 				E56DCA4A2216339900709C1F /* SubscribedCell.swift in Sources */,
 				E56DCA4822162E2D00709C1F /* SubscribedView.swift in Sources */,
 				E553675A21FD5BC400894493 /* AppDelegate.swift in Sources */,

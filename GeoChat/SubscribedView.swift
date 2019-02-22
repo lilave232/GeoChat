@@ -22,7 +22,10 @@ class SubscribedView: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        chats = TabBarController.subscribed
+        print(TabBarController.subscribed)
         GetChats()
+        self.tableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -82,6 +85,7 @@ class SubscribedView: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
+        
         let UnSubscribe = UITableViewRowAction(style: .normal, title: "Unsubscribe") { action, index in
             let id = (self.chats[editActionsForRowAt.row].value(forKey: "chat_id") as! String)
             self.Unsubscribe(chatID: id)
@@ -122,7 +126,7 @@ class SubscribedView: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func GetChats() {
-        self.chats = []
+        TabBarController.subscribed = []
         let parameters: Parameters=[
             "Username":UserDefaults.standard.object(forKey: "Username")!,
         ]
@@ -135,13 +139,15 @@ class SubscribedView: UIViewController, UITableViewDelegate, UITableViewDataSour
                     let jsonData = result as! NSDictionary
                     if(!(jsonData.value(forKey: "error") as! Bool)){
                         let array = jsonData.value(forKey: "chats") as! [NSDictionary]
-                        print("Checked Chats")
-                        self.chats = array
+                        //print("Checked Chats")
+                        TabBarController.subscribed = array
                     }else{
                         print("Unsuccessful")
                     }
                     self.tableView.reloadData()
                 }
+                self.chats = TabBarController.subscribed
+                self.tableView.reloadData()
         }
     }
     

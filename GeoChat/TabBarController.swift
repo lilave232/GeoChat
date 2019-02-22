@@ -43,6 +43,7 @@ class TabBarController: UITabBarController, WebSocketDelegate {
     
     
     var local_chats: [NSDictionary]! = []
+    static var subscribed: [NSDictionary]! = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
