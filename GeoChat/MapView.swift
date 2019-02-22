@@ -116,6 +116,7 @@ class MapView: UIViewController, CLLocationManagerDelegate, updateMap {
             circ!.strokeWidth = 4
             circ!.map = mapView
         }
+        //Get Chats
         GetChats(location: location.coordinate)
         GetSubscribed()
     }
