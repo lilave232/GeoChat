@@ -121,7 +121,7 @@ class MapView: UIViewController, CLLocationManagerDelegate, updateMap {
             "Longitude":Location.coordinate.longitude,
             "Latitude":Location.coordinate.latitude
         ]
-        let URL_USER_UPDATE_LOCATION = AppDelegate.URLConnection + ":8081/UpdateLocation"
+        let URL_USER_UPDATE_LOCATION = AppDelegate.URLConnection + "/UpdateLocation"
         Alamofire.request(URL_USER_UPDATE_LOCATION, method: .post, parameters: parameters).responseJSON
         {
             response in
@@ -144,7 +144,7 @@ class MapView: UIViewController, CLLocationManagerDelegate, updateMap {
             "Longitude":location.longitude,
             "Latitude":location.latitude
         ]
-        let URL_USER_UPDATE_LOCATION = AppDelegate.URLConnection + ":8081/GetMapChats"
+        let URL_USER_UPDATE_LOCATION = AppDelegate.URLConnection + "/GetMapChats"
         Alamofire.request(URL_USER_UPDATE_LOCATION, method: .post, parameters: parameters).responseJSON
         {
             response in

@@ -15,7 +15,7 @@ import Alamofire
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    static let URLConnection = "http://192.168.0.35"
+    static let URLConnection = "https://natalis.serveo.net"
     let googleApiKey = "AIzaSyCe1BfQ2Bdcb50fExIsxnGXgH9CzbbJ3nk"
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -81,7 +81,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             "Username":Username!,
             "Token":Token!,
         ]
-        let URL_USER_UPDATE_TOKEN = AppDelegate.URLConnection + ":8081/UpdateToken"
+        let URL_USER_UPDATE_TOKEN = AppDelegate.URLConnection + "/UpdateToken"
         Alamofire.request(URL_USER_UPDATE_TOKEN, method: .post, parameters: parameters).responseJSON
             {
                 response in

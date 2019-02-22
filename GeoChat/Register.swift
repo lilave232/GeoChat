@@ -16,7 +16,7 @@ class Register: UIViewController {
     @IBOutlet weak var Username: UITextField!
     @IBOutlet weak var Password: UITextField!
     @IBOutlet weak var ConfirmPassword: UITextField!
-    let URL_USER_REGISTER = AppDelegate.URLConnection + ":8081/Register"
+    let URL_USER_REGISTER = AppDelegate.URLConnection + "/Register"
     let defaultValues = UserDefaults.standard
     
     override func viewDidLoad() {

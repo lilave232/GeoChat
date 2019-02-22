@@ -91,7 +91,7 @@ class AddFriends: UITableViewController, UISearchResultsUpdating {
         let parameters: Parameters=[
             "Username":Username!,
         ]
-        let URL_USER_ALL_USERS = AppDelegate.URLConnection + ":8081/GetAllUsers"
+        let URL_USER_ALL_USERS = AppDelegate.URLConnection + "/GetAllUsers"
         Alamofire.request(URL_USER_ALL_USERS, method: .post, parameters: parameters).responseJSON
             {
                 response in
@@ -118,7 +118,7 @@ class AddFriends: UITableViewController, UISearchResultsUpdating {
         let parameters: Parameters=[
             "Username":Username!,
         ]
-        let URL_USER_GET_FRIENDS = AppDelegate.URLConnection + ":8081/GetFriends"
+        let URL_USER_GET_FRIENDS = AppDelegate.URLConnection + "/GetFriends"
         Alamofire.request(URL_USER_GET_FRIENDS, method: .post, parameters: parameters).responseJSON
             {
                 response in

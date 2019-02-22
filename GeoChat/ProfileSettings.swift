@@ -38,7 +38,7 @@ class ProfileSettings: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     @IBAction func changeBackgroundAction(_ sender: Any) {
         let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        let vc1 = mainStoryboard.instantiateViewController(withIdentifier: "ColorPicker") as! ColorPicker
+        let vc1 = mainStoryboard.instantiateViewController(withIdentifier: "ColorPicker") as! colorPicker_1Sample
         vc1.setting = "ColorBack"
         self.show(vc1, sender:nil)
     }
@@ -48,7 +48,7 @@ class ProfileSettings: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     @IBAction func changeForegroundAction(_ sender: Any) {
         let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        let vc1 = mainStoryboard.instantiateViewController(withIdentifier: "ColorPicker") as! ColorPicker
+        let vc1 = mainStoryboard.instantiateViewController(withIdentifier: "ColorPicker") as! colorPicker_1Sample
         vc1.setting = "ColorFront"
         self.show(vc1, sender: nil)
     }
@@ -123,7 +123,7 @@ class ProfileSettings: UIViewController, UITableViewDelegate, UITableViewDataSou
         let parameters: Parameters=[
             "Username":Username!,
         ]
-        let URL_USER_GET_FRIENDS = AppDelegate.URLConnection + ":8081/GetFriends"
+        let URL_USER_GET_FRIENDS = AppDelegate.URLConnection + "/GetFriends"
         Alamofire.request(URL_USER_GET_FRIENDS, method: .post, parameters: parameters).responseJSON
             {
                 response in
@@ -155,7 +155,7 @@ class ProfileSettings: UIViewController, UITableViewDelegate, UITableViewDataSou
             "Username":Username!,
             "Friend":Friend!,
         ]
-        let URL_USER_REMOVE_FRIEND = AppDelegate.URLConnection + ":8081/RemoveFriend"
+        let URL_USER_REMOVE_FRIEND = AppDelegate.URLConnection + "/RemoveFriend"
         Alamofire.request(URL_USER_REMOVE_FRIEND, method: .post, parameters: parameters).responseJSON
             {
                 response in

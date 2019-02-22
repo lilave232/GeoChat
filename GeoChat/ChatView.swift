@@ -208,7 +208,7 @@ class ChatView: UIViewController, UITableViewDelegate, UITableViewDataSource, Me
         let parameters: Parameters=[
             "chatID":chat_id,
         ]
-        let URL_USER_GET_CHAT = AppDelegate.URLConnection + ":8081/GetChat"
+        let URL_USER_GET_CHAT = AppDelegate.URLConnection + "/GetChat"
         Alamofire.request(URL_USER_GET_CHAT, method: .post, parameters: parameters).responseJSON
             {
                 response in

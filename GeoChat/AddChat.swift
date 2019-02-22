@@ -94,7 +94,7 @@ class AddChat: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, I
             "Private":privacySettingsTextField.text!,
             "Image":imagePressed
         ]
-        let URL_USER_CREATE_CHAT = AppDelegate.URLConnection + ":8081/CreateChat"
+        let URL_USER_CREATE_CHAT = AppDelegate.URLConnection + "/CreateChat"
         Alamofire.request(URL_USER_CREATE_CHAT, method: .post, parameters: parameters).responseJSON
             {
                 response in

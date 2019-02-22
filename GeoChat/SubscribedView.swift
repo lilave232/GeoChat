@@ -32,9 +32,9 @@ class SubscribedView: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SubscribedCell", for: indexPath) as! SubscribedCell
         //let coord = CLLocation(latitude: local_chats[indexPath.row].value(forKey: "Latitude") as! Double, longitude: local_chats[indexPath.row].value(forKey: "Longitude") as! Double).coordinate
-        let width = Double(30)
-        let height = 1.86 * width
-        let id = (chats[indexPath.row].value(forKey: "chat_id") as! String)
+        //let width = Double(30)
+        //let height = 1.86 * width
+        //let id = (chats[indexPath.row].value(forKey: "chat_id") as! String)
         let image = (chats[indexPath.row].value(forKey: "Image") as! String)
         let title = (chats[indexPath.row].value(forKey: "chat_name") as! String)
         let created_date = UTCToLocal(date: String((chats[indexPath.row].value(forKey: "created_at") as! String).split(separator: ".")[0]))
@@ -126,7 +126,7 @@ class SubscribedView: UIViewController, UITableViewDelegate, UITableViewDataSour
         let parameters: Parameters=[
             "Username":UserDefaults.standard.object(forKey: "Username")!,
         ]
-        let URL_USER_GET_SUBSCRIBED = AppDelegate.URLConnection + ":8081/GetSubscribedChats"
+        let URL_USER_GET_SUBSCRIBED = AppDelegate.URLConnection + "/GetSubscribedChats"
         Alamofire.request(URL_USER_GET_SUBSCRIBED, method: .post, parameters: parameters).responseJSON
             {
                 response in
@@ -150,7 +150,7 @@ class SubscribedView: UIViewController, UITableViewDelegate, UITableViewDataSour
             "member":UserDefaults.standard.object(forKey: "Username")!,
             "chatID":chatID,
         ]
-        let URL_USER_UNSUBSCRIBE = AppDelegate.URLConnection + ":8081/Unsubscribe"
+        let URL_USER_UNSUBSCRIBE = AppDelegate.URLConnection + "/Unsubscribe"
         Alamofire.request(URL_USER_UNSUBSCRIBE, method: .post, parameters: parameters).responseJSON
             {
                 response in

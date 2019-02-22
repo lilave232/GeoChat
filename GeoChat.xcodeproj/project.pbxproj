@@ -32,6 +32,7 @@
 		E5827DBD2213B203005CCEB2 /* FriendsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5827DBC2213B203005CCEB2 /* FriendsTableView.swift */; };
 		E5827DBF2213C388005CCEB2 /* AddFriends.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5827DBE2213C388005CCEB2 /* AddFriends.swift */; };
 		E5827DC12213C5AB005CCEB2 /* AddFriendsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5827DC02213C5AB005CCEB2 /* AddFriendsCell.swift */; };
+		E585EA54221A7AD000C91437 /* ColorPicker_1Sample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E585EA53221A7AD000C91437 /* ColorPicker_1Sample.swift */; };
 		E5C9DD5122158A1D00977C5C /* RequestsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C9DD5022158A1D00977C5C /* RequestsTableView.swift */; };
 		E5DE290F220E464000C82C27 /* ChatNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DE290E220E464000C82C27 /* ChatNameCell.swift */; };
 		E5DE2911220E478100C82C27 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DE2910220E478100C82C27 /* TabBarController.swift */; };
@@ -87,6 +88,7 @@
 		E5827DBC2213B203005CCEB2 /* FriendsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableView.swift; sourceTree = "<group>"; };
 		E5827DBE2213C388005CCEB2 /* AddFriends.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriends.swift; sourceTree = "<group>"; };
 		E5827DC02213C5AB005CCEB2 /* AddFriendsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendsCell.swift; sourceTree = "<group>"; };
+		E585EA53221A7AD000C91437 /* ColorPicker_1Sample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPicker_1Sample.swift; sourceTree = "<group>"; };
 		E5C33BC62201F2E300C6886F /* GeoChat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GeoChat.entitlements; sourceTree = "<group>"; };
 		E5C9DD5022158A1D00977C5C /* RequestsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestsTableView.swift; sourceTree = "<group>"; };
 		E5DE290E220E464000C82C27 /* ChatNameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatNameCell.swift; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 				E553678F21FD67F400894493 /* Register.swift */,
 				E553678921FD5D3D00894493 /* Assets.xcassets */,
 				E553675F21FD5BC500894493 /* Main.storyboard */,
+				E585EA53221A7AD000C91437 /* ColorPicker_1Sample.swift */,
 				E56DCA492216339900709C1F /* SubscribedCell.swift */,
 				E5C9DD5022158A1D00977C5C /* RequestsTableView.swift */,
 				E5827DC02213C5AB005CCEB2 /* AddFriendsCell.swift */,
@@ -425,6 +428,7 @@
 				E5827DB722138961005CCEB2 /* ProfileSettings.swift in Sources */,
 				E5827DC12213C5AB005CCEB2 /* AddFriendsCell.swift in Sources */,
 				E51B15AA220428E300EE6164 /* ImageCollectionCell.swift in Sources */,
+				E585EA54221A7AD000C91437 /* ColorPicker_1Sample.swift in Sources */,
 				E553678E21FD67CE00894493 /* Login.swift in Sources */,
 				E5DE290F220E464000C82C27 /* ChatNameCell.swift in Sources */,
 				E553675E21FD5BC500894493 /* LocalView.swift in Sources */,

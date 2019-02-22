@@ -135,7 +135,7 @@ class LocalView: UIViewController, UITableViewDelegate, UITableViewDataSource {
             "Longitude":location.longitude,
             "Latitude":location.latitude
         ]
-        let URL_USER_UPDATE_LOCATION = AppDelegate.URLConnection + ":8081/GetMapChats"
+        let URL_USER_UPDATE_LOCATION = AppDelegate.URLConnection + "/GetMapChats"
         Alamofire.request(URL_USER_UPDATE_LOCATION, method: .post, parameters: parameters).responseJSON
             {
                 response in
@@ -160,7 +160,7 @@ class LocalView: UIViewController, UITableViewDelegate, UITableViewDataSource {
             "member":UserDefaults.standard.object(forKey: "Username")!,
             "chatID":chatID,
         ]
-        let URL_USER_SUBSCRIBE = AppDelegate.URLConnection + ":8081/Subscribe"
+        let URL_USER_SUBSCRIBE = AppDelegate.URLConnection + "/Subscribe"
         Alamofire.request(URL_USER_SUBSCRIBE, method: .post, parameters: parameters).responseJSON
             {
                 response in

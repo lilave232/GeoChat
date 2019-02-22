@@ -18,7 +18,7 @@ protocol MessageReceivedDelegate: class {
 
 class TabBarController: UITabBarController, WebSocketDelegate {
     static var mdelegate: MessageReceivedDelegate?
-    static var socket = WebSocket(url: URL(string: AppDelegate.URLConnection + ":8081/")!, protocols: ["echo-protocol"])
+    static var socket = WebSocket(url: URL(string: AppDelegate.URLConnection + "/")!, protocols: ["echo-protocol"])
     weak var messageDelegate: MessageReceivedDelegate?
     static var location: CLLocation? = nil
     

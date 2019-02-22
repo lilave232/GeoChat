@@ -98,7 +98,7 @@ class FriendsTableView: UITableViewController, UISearchResultsUpdating {
         let parameters: Parameters=[
             "Username":Username!,
         ]
-        let URL_USER_GET_FRIENDS = AppDelegate.URLConnection + ":8081/GetFriends"
+        let URL_USER_GET_FRIENDS = AppDelegate.URLConnection + "/GetFriends"
         Alamofire.request(URL_USER_GET_FRIENDS, method: .post, parameters: parameters).responseJSON
             {
                 response in
@@ -126,7 +126,7 @@ class FriendsTableView: UITableViewController, UISearchResultsUpdating {
             "Username":Username!,
             "Friend":Friend!,
         ]
-        let URL_USER_REMOVE_FRIEND = AppDelegate.URLConnection + ":8081/RemoveFriend"
+        let URL_USER_REMOVE_FRIEND = AppDelegate.URLConnection + "/RemoveFriend"
         Alamofire.request(URL_USER_REMOVE_FRIEND, method: .post, parameters: parameters).responseJSON
             {
                 response in

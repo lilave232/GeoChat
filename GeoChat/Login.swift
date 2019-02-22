@@ -52,7 +52,7 @@ class Login: UIViewController {
             "Password":Password,
             //set Token as value of unique device notification token
         ]
-        let URL_USER_LOGIN = AppDelegate.URLConnection + ":8081/LogIn"
+        let URL_USER_LOGIN = AppDelegate.URLConnection + "/LogIn"
         //making a post request
         Alamofire.request(URL_USER_LOGIN, method: .post, parameters: parameters).responseJSON
             {
