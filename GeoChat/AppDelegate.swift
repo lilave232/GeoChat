@@ -15,8 +15,8 @@ import Alamofire
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    static let URLConnection = "https://natalis.serveo.net"
-    let googleApiKey = "AIzaSyCe1BfQ2Bdcb50fExIsxnGXgH9CzbbJ3nk"
+    static let URLConnection = Constants.url
+    let googleApiKey = Constants.googleApiKey
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.

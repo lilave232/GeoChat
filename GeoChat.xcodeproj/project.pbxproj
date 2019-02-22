@@ -25,6 +25,8 @@
 		E553678C21FD657800894493 /* LoginRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553678B21FD657800894493 /* LoginRegister.swift */; };
 		E553678E21FD67CE00894493 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553678D21FD67CE00894493 /* Login.swift */; };
 		E553679021FD67F400894493 /* Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553678F21FD67F400894493 /* Register.swift */; };
+		E556AE9B221FEEAE000DD14B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E556AE9A221FEEAE000DD14B /* Constants.swift */; };
+		E556AE9D221FEFD0000DD14B /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = E556AE9C221FEFD0000DD14B /* .gitignore */; };
 		E55F38EC221FDE3800E98537 /* ProfileSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55F38EB221FDE3800E98537 /* ProfileSettings.swift */; };
 		E56DCA4822162E2D00709C1F /* SubscribedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56DCA4722162E2D00709C1F /* SubscribedView.swift */; };
 		E56DCA4A2216339900709C1F /* SubscribedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56DCA492216339900709C1F /* SubscribedCell.swift */; };
@@ -81,6 +83,8 @@
 		E553678B21FD657800894493 /* LoginRegister.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRegister.swift; sourceTree = "<group>"; };
 		E553678D21FD67CE00894493 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		E553678F21FD67F400894493 /* Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Register.swift; sourceTree = "<group>"; };
+		E556AE9A221FEEAE000DD14B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		E556AE9C221FEFD0000DD14B /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; name = .gitignore; path = ../.gitignore; sourceTree = "<group>"; };
 		E55F38EB221FDE3800E98537 /* ProfileSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettings.swift; sourceTree = "<group>"; };
 		E56DCA4722162E2D00709C1F /* SubscribedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribedView.swift; sourceTree = "<group>"; };
 		E56DCA492216339900709C1F /* SubscribedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribedCell.swift; sourceTree = "<group>"; };
@@ -157,6 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				E5C33BC62201F2E300C6886F /* GeoChat.entitlements */,
+				E556AE9A221FEEAE000DD14B /* Constants.swift */,
 				E553675921FD5BC400894493 /* AppDelegate.swift */,
 				E553675B21FD5BC500894493 /* MapView.swift */,
 				E553675D21FD5BC500894493 /* LocalView.swift */,
@@ -184,6 +189,7 @@
 				E51B15A722040F9500EE6164 /* AddChat.swift */,
 				E553676421FD5BC800894493 /* LaunchScreen.storyboard */,
 				E553676721FD5BC800894493 /* Info.plist */,
+				E556AE9C221FEFD0000DD14B /* .gitignore */,
 			);
 			path = GeoChat;
 			sourceTree = "<group>";
@@ -326,6 +332,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E556AE9D221FEFD0000DD14B /* .gitignore in Resources */,
 				E553676621FD5BC800894493 /* LaunchScreen.storyboard in Resources */,
 				E553678A21FD5D3D00894493 /* Assets.xcassets in Resources */,
 				E553676121FD5BC500894493 /* Main.storyboard in Resources */,
@@ -437,6 +444,7 @@
 				E553675A21FD5BC400894493 /* AppDelegate.swift in Sources */,
 				E553675C21FD5BC500894493 /* MapView.swift in Sources */,
 				E5827DBF2213C388005CCEB2 /* AddFriends.swift in Sources */,
+				E556AE9B221FEEAE000DD14B /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
