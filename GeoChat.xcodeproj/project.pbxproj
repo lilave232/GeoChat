@@ -14,6 +14,8 @@
 		E5386415220FBA87009ABFC8 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5386414220FBA87009ABFC8 /* ChatView.swift */; };
 		E5386417220FC413009ABFC8 /* ChatMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5386416220FC413009ABFC8 /* ChatMessageCell.swift */; };
 		E542F23E221246F200CE8E70 /* ColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E542F23D221246F200CE8E70 /* ColorPicker.swift */; };
+		E54666CB2227703600C46D5C /* FriendsPickerTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54666CA2227703600C46D5C /* FriendsPickerTableView.swift */; };
+		E54666CD2227773100C46D5C /* FriendsPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54666CC2227773100C46D5C /* FriendsPickerCell.swift */; };
 		E553675A21FD5BC400894493 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553675921FD5BC400894493 /* AppDelegate.swift */; };
 		E553675C21FD5BC500894493 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553675B21FD5BC500894493 /* MapView.swift */; };
 		E553675E21FD5BC500894493 /* LocalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553675D21FD5BC500894493 /* LocalView.swift */; };
@@ -66,6 +68,8 @@
 		E5386414220FBA87009ABFC8 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		E5386416220FC413009ABFC8 /* ChatMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageCell.swift; sourceTree = "<group>"; };
 		E542F23D221246F200CE8E70 /* ColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPicker.swift; sourceTree = "<group>"; };
+		E54666CA2227703600C46D5C /* FriendsPickerTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsPickerTableView.swift; sourceTree = "<group>"; };
+		E54666CC2227773100C46D5C /* FriendsPickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsPickerCell.swift; sourceTree = "<group>"; };
 		E553675621FD5BC400894493 /* GeoChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GeoChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E553675921FD5BC400894493 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E553675B21FD5BC500894493 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
@@ -171,6 +175,7 @@
 				E553678F21FD67F400894493 /* Register.swift */,
 				E553678921FD5D3D00894493 /* Assets.xcassets */,
 				E553675F21FD5BC500894493 /* Main.storyboard */,
+				E54666CC2227773100C46D5C /* FriendsPickerCell.swift */,
 				E55F38EB221FDE3800E98537 /* ProfileSettings.swift */,
 				E585EA53221A7AD000C91437 /* ColorPicker_1Sample.swift */,
 				E56DCA492216339900709C1F /* SubscribedCell.swift */,
@@ -178,6 +183,7 @@
 				E5827DC02213C5AB005CCEB2 /* AddFriendsCell.swift */,
 				E5827DBE2213C388005CCEB2 /* AddFriends.swift */,
 				E5827DBC2213B203005CCEB2 /* FriendsTableView.swift */,
+				E54666CA2227703600C46D5C /* FriendsPickerTableView.swift */,
 				E5827DB82213978E005CCEB2 /* FriendsCell.swift */,
 				E542F23D221246F200CE8E70 /* ColorPicker.swift */,
 				E5386416220FC413009ABFC8 /* ChatMessageCell.swift */,
@@ -425,8 +431,10 @@
 				E51B15AC2204298500EE6164 /* ImageCollectionView.swift in Sources */,
 				E542F23E221246F200CE8E70 /* ColorPicker.swift in Sources */,
 				E5DE2911220E478100C82C27 /* TabBarController.swift in Sources */,
+				E54666CB2227703600C46D5C /* FriendsPickerTableView.swift in Sources */,
 				E51B15A822040F9500EE6164 /* AddChat.swift in Sources */,
 				E5386415220FBA87009ABFC8 /* ChatView.swift in Sources */,
+				E54666CD2227773100C46D5C /* FriendsPickerCell.swift in Sources */,
 				E553678C21FD657800894493 /* LoginRegister.swift in Sources */,
 				E5827DB92213978E005CCEB2 /* FriendsCell.swift in Sources */,
 				E5386417220FC413009ABFC8 /* ChatMessageCell.swift in Sources */,

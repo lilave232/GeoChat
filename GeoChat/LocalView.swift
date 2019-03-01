@@ -89,24 +89,34 @@ class LocalView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
+        var return_arr:[UITableViewRowAction] = []
+        if ((self.local_chats[editActionsForRowAt.row].value(forKey: "username")  as! String) == UserDefaults.standard.string(forKey: "Username")){
+            let Delete = UITableViewRowAction(style: .normal, title: "Delete Chat") { action, index in
+                let id = (self.local_chats[editActionsForRowAt.row].value(forKey: "chat_id") as! String)
+                self.local_chats.remove(at: editActionsForRowAt.row)
+                self.tableView.reloadData()
+                self.DeleteChat(chatID: id)
+            }
+            Delete.backgroundColor = .red
+            return_arr.append(Delete)
+        }
         if (!TabBarController.subscribed.contains {$0.value(forKey: "chatID") as! String == (local_chats[editActionsForRowAt.row].value(forKey: "chat_id") as! String)})
         {
-            print("Not In Subscribed")
             let Subscribe = UITableViewRowAction(style: .normal, title: "Subscribe") { action, index in
                 let id = (self.local_chats[editActionsForRowAt.row].value(forKey: "chat_id") as! String)
                 self.Subscribe(chatID: id)
             }
             Subscribe.backgroundColor = .blue
-            return [Subscribe]
+            return_arr.append(Subscribe)
         } else {
-            print("In Subscribed")
             let Unsubscribe = UITableViewRowAction(style: .normal, title: "Unsubscribe") { action, index in
                 let id = (self.local_chats[editActionsForRowAt.row].value(forKey: "chat_id") as! String)
                 self.Unsubscribe(chatID: id)
             }
             Unsubscribe.backgroundColor = .blue
-            return [Unsubscribe]
+            return_arr.append(Unsubscribe)
         }
+        return return_arr
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -159,10 +169,10 @@ class LocalView: UIViewController, UITableViewDelegate, UITableViewDataSource {
                         self.controller!.local_chats = array
                         print("Checked Chats")
                         self.local_chats = self.controller!.local_chats
-                        self.tableView.reloadData()
                     }else{
                         print("Unsuccessful")
                     }
+                    self.tableView.reloadData()
                 }
         }
     }
@@ -190,6 +200,27 @@ class LocalView: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 self.tableView.reloadData()
         }
     }
+    func DeleteChat(chatID: String) {
+        let parameters: Parameters=[
+            "chatID":chatID,
+        ]
+        let URL_USER_DELETE_CHAT = AppDelegate.URLConnection + "/DeleteChat"
+        Alamofire.request(URL_USER_DELETE_CHAT, method: .post, parameters: parameters).responseJSON
+            {
+                response in
+                if let result = response.result.value {
+                    let jsonData = result as! NSDictionary
+                    if(!(jsonData.value(forKey: "error") as! Bool)){
+                        print("Deleted")
+                        self.GetChats(location: TabBarController.location!.coordinate)
+                        self.GetSubscribed()
+                    }else{
+                        print("Deleted")
+                    }
+                }
+                //self.tableView.reloadData()
+        }
+    }
     func Unsubscribe(chatID: String) {
         let parameters: Parameters=[
             "member":UserDefaults.standard.object(forKey: "Username")!,
@@ -199,7 +230,6 @@ class LocalView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         Alamofire.request(URL_USER_UNSUBSCRIBE, method: .post, parameters: parameters).responseJSON
         {
             response in
-            print(response)
             if let result = response.result.value {
                 let jsonData = result as! NSDictionary
                 if(!(jsonData.value(forKey: "error") as! Bool)){
@@ -222,7 +252,6 @@ class LocalView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         Alamofire.request(URL_USER_GET_SUBSCRIBED, method: .post, parameters: parameters).responseJSON
             {
                 response in
-                print(response)
                 if let result = response.result.value {
                     let jsonData = result as! NSDictionary
                     if(!(jsonData.value(forKey: "error") as! Bool)){

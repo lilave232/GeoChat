@@ -23,7 +23,6 @@ class SubscribedView: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         chats = TabBarController.subscribed
-        print(TabBarController.subscribed)
         GetChats()
         self.tableView.reloadData()
     }
@@ -38,8 +37,16 @@ class SubscribedView: UIViewController, UITableViewDelegate, UITableViewDataSour
         //let width = Double(30)
         //let height = 1.86 * width
         //let id = (chats[indexPath.row].value(forKey: "chat_id") as! String)
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        var title = ""
+        if ((chats[indexPath.row].value(forKey: "chat_name") as! String).contains(",")) {
+            let title_array = (chats[indexPath.row].value(forKey: "chat_name") as! String).split(separator: ",")
+            let title_filtered = title_array.filter { String($0) != UserDefaults.standard.string(forKey: "Username") }
+            title = String(title_filtered.joined(separator: ", "))
+        } else {
+            title = (chats[indexPath.row].value(forKey: "chat_name") as! String)
+        }
         let image = (chats[indexPath.row].value(forKey: "Image") as! String)
-        let title = (chats[indexPath.row].value(forKey: "chat_name") as! String)
         let created_date = UTCToLocal(date: String((chats[indexPath.row].value(forKey: "created_at") as! String).split(separator: ".")[0]))
         var latest_message = "No Messages"
         var sent_by = ""
@@ -77,10 +84,11 @@ class SubscribedView: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let vc = mainStoryboard.instantiateViewController(withIdentifier: "Chat") as! ChatView
-        let title = (chats[indexPath.row].value(forKey: "chat_name") as! String)
         let id = (chats[indexPath.row].value(forKey: "chat_id") as! String)
-        vc.chat_title = title
+        let type = (chats[indexPath.row].value(forKey: "Private") as! String)
+        vc.chat_title = chats[indexPath.row].value(forKey: "chat_name") as! String
         vc.chat_id = id
+        vc.chat_type = type
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -88,11 +96,30 @@ class SubscribedView: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let UnSubscribe = UITableViewRowAction(style: .normal, title: "Unsubscribe") { action, index in
             let id = (self.chats[editActionsForRowAt.row].value(forKey: "chat_id") as! String)
-            self.Unsubscribe(chatID: id)
+            let type = (self.chats[editActionsForRowAt.row].value(forKey: "Private") as! String)
+            var title = ""
+            if ((self.chats[editActionsForRowAt.row].value(forKey: "chat_name") as! String).contains(",")) {
+                let title_array = (self.chats[editActionsForRowAt.row].value(forKey: "chat_name") as! String).split(separator: ",")
+                let title_filtered = title_array.filter { String($0) != UserDefaults.standard.string(forKey: "Username") }
+                title = String(title_filtered.joined(separator: ","))
+            } else {
+                title = (self.chats[editActionsForRowAt.row].value(forKey: "chat_name") as! String)
+            }
+            if (type == "Direct Message") {
+                self.UnsubscribePrivate(chatID: id, chatTitle: title)
+            } else {
+                self.Unsubscribe(chatID: id)
+            }
             self.chats.remove(at: editActionsForRowAt.row)
             self.tableView.reloadData()
         }
-        UnSubscribe.backgroundColor = .blue
+        let type = (self.chats[editActionsForRowAt.row].value(forKey: "Private") as! String)
+        if (type == "Direct Message") {
+            UnSubscribe.title = "Leave Chat"
+            UnSubscribe.backgroundColor = .red
+        } else {
+            UnSubscribe.backgroundColor = .blue
+        }
         
         return [UnSubscribe]
     }
@@ -160,7 +187,28 @@ class SubscribedView: UIViewController, UITableViewDelegate, UITableViewDataSour
         Alamofire.request(URL_USER_UNSUBSCRIBE, method: .post, parameters: parameters).responseJSON
             {
                 response in
-                print(response)
+                if let result = response.result.value {
+                    let jsonData = result as! NSDictionary
+                    if(!(jsonData.value(forKey: "error") as! Bool)){
+                        print("Unsubscribed")
+                        self.GetChats()
+                    }else{
+                        print("Unsuccessful")
+                    }
+                }
+        }
+    }
+    ///UnsubscribePrivate
+    func UnsubscribePrivate(chatID: String, chatTitle:String) {
+        let parameters: Parameters=[
+            "member":UserDefaults.standard.object(forKey: "Username")!,
+            "chatID":chatID,
+            "chatTitle":chatTitle,
+        ]
+        let URL_USER_UNSUBSCRIBE = AppDelegate.URLConnection + "/UnsubscribePrivate"
+        Alamofire.request(URL_USER_UNSUBSCRIBE, method: .post, parameters: parameters).responseJSON
+            {
+                response in
                 if let result = response.result.value {
                     let jsonData = result as! NSDictionary
                     if(!(jsonData.value(forKey: "error") as! Bool)){

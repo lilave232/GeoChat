@@ -131,7 +131,6 @@ class MapView: UIViewController, CLLocationManagerDelegate, updateMap {
         Alamofire.request(URL_USER_UPDATE_LOCATION, method: .post, parameters: parameters).responseJSON
         {
             response in
-            print(response)
             if let result = response.result.value {
                 let jsonData = result as! NSDictionary
                 if(!(jsonData.value(forKey: "error") as! Bool)){
@@ -155,7 +154,6 @@ class MapView: UIViewController, CLLocationManagerDelegate, updateMap {
         Alamofire.request(URL_USER_UPDATE_LOCATION, method: .post, parameters: parameters).responseJSON
         {
             response in
-            print(response)
             if let result = response.result.value {
                 let jsonData = result as! NSDictionary
                 if(!(jsonData.value(forKey: "error") as! Bool)){
@@ -177,7 +175,6 @@ class MapView: UIViewController, CLLocationManagerDelegate, updateMap {
                         marker.map = self.mapView
                     })
                     self.controller!.local_chats = array
-                    print(self.controller!.local_chats)
                 }else{
                     print("Unsuccessful")
                 }
@@ -193,7 +190,6 @@ class MapView: UIViewController, CLLocationManagerDelegate, updateMap {
         Alamofire.request(URL_USER_GET_SUBSCRIBED, method: .post, parameters: parameters).responseJSON
             {
                 response in
-                print(response)
                 if let result = response.result.value {
                     let jsonData = result as! NSDictionary
                     if(!(jsonData.value(forKey: "error") as! Bool)){

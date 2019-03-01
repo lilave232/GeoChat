@@ -88,6 +88,9 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="privacySettingsChanged:" destination="VqS-td-Hho" eventType="editingChanged" id="9zu-j8-6Ob"/>
+                                </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose Display Image:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b4y-Pt-ciz">
                                 <rect key="frame" x="21" y="210" width="175" height="21"/>
@@ -140,10 +143,13 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="chooseTitleLabel" destination="aTA-4w-O88" id="689-8X-URf"/>
+                        <outlet property="createButton" destination="HRZ-TG-pZk" id="eS3-KL-N3z"/>
                         <outlet property="display_image" destination="R7R-u4-LJS" id="dnX-xE-J4B"/>
                         <outlet property="privacySettingsTextField" destination="jo0-NE-EZC" id="hzw-vy-sii"/>
                         <outlet property="titleText" destination="hTe-vc-Hxl" id="Xn8-VG-GCD"/>
                         <segue destination="HnQ-yP-yVn" kind="show" id="8gt-N2-AfK"/>
+                        <segue destination="dH0-4E-ecv" kind="show" id="Ugy-fz-o2v"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R0J-NE-cyO" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1523,6 +1529,70 @@
             </objects>
             <point key="canvasLocation" x="1977" y="-685"/>
         </scene>
+        <!--Friends-->
+        <scene sceneID="klP-Gr-0TG">
+            <objects>
+                <tableViewController storyboardIdentifier="FriendsPicker" hidesBottomBarWhenPushed="YES" id="dH0-4E-ecv" customClass="FriendsPickerTableView" customModule="GeoChat" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="N0w-MD-Wzd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="pickFriendCell" rowHeight="60" id="iEw-Ie-qhv" customClass="FriendsPickerCell" customModule="GeoChat" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="60"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="iEw-Ie-qhv" id="EmR-BT-WBE">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="59.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UT8-fK-phT">
+                                            <rect key="frame" x="16" y="20" width="286" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="fYG-FD-a9b">
+                                            <rect key="frame" x="310" y="15" width="49" height="31"/>
+                                            <connections>
+                                                <action selector="sliderChanged:" destination="iEw-Ie-qhv" eventType="valueChanged" id="cmA-dg-5rp"/>
+                                            </connections>
+                                        </switch>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottomMargin" secondItem="fYG-FD-a9b" secondAttribute="bottom" constant="3" id="5HJ-MO-dAS"/>
+                                        <constraint firstItem="UT8-fK-phT" firstAttribute="centerY" secondItem="EmR-BT-WBE" secondAttribute="centerY" id="GrK-1i-jdu"/>
+                                        <constraint firstItem="UT8-fK-phT" firstAttribute="centerY" secondItem="fYG-FD-a9b" secondAttribute="centerY" id="Hnx-P9-j5H"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="UT8-fK-phT" secondAttribute="bottom" constant="8" id="JZ4-lG-yrL"/>
+                                        <constraint firstItem="fYG-FD-a9b" firstAttribute="leading" secondItem="UT8-fK-phT" secondAttribute="trailing" constant="8" symbolic="YES" id="ihx-V9-lXU"/>
+                                        <constraint firstItem="UT8-fK-phT" firstAttribute="leading" secondItem="EmR-BT-WBE" secondAttribute="leadingMargin" id="jdL-vb-TAK"/>
+                                        <constraint firstItem="fYG-FD-a9b" firstAttribute="trailing" secondItem="EmR-BT-WBE" secondAttribute="trailingMargin" constant="-2" id="tCB-I4-Yqv"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <connections>
+                                    <outlet property="Label" destination="UT8-fK-phT" id="S3J-h2-H1j"/>
+                                    <outlet property="slider" destination="fYG-FD-a9b" id="zfr-8y-7LJ"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="dH0-4E-ecv" id="88F-Sk-WKY"/>
+                            <outlet property="delegate" destination="dH0-4E-ecv" id="QqN-2a-0Rk"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Friends" id="M6P-RY-1sX">
+                        <barButtonItem key="rightBarButtonItem" title="Create" id="avn-H3-bum">
+                            <connections>
+                                <action selector="createButton:" destination="dH0-4E-ecv" id="C8q-aJ-uJ3"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="txr-8L-aPo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6084" y="-0.44977511244377816"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Back" width="55" height="58"/>
@@ -1543,6 +1613,6 @@
         <segue reference="ACM-GK-nbw"/>
         <segue reference="Z1y-Pc-np8"/>
         <segue reference="fHh-7d-mtz"/>
-        <segue reference="WBR-UT-xrV"/>
+        <segue reference="130-ds-Jj3"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -36,6 +36,7 @@ class ChatView: UIViewController, UITableViewDelegate, UITableViewDataSource, Me
     
     var chat_title = ""
     var chat_id = ""
+    var chat_type = ""
     var chat:[String] = []
     var message:[String] = []
     var colorBack:[Int] = []
@@ -59,7 +60,15 @@ class ChatView: UIViewController, UITableViewDelegate, UITableViewDataSource, Me
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         self.hideKeyboardWhenTappedAround()
-        chat_title_bar.title = chat_title
+        var title = ""
+        if (chat_title.contains(",")) {
+            let title_array = chat_title.split(separator: ",")
+            let title_filtered = title_array.filter { String($0) != UserDefaults.standard.string(forKey: "Username") }
+            title = String(title_filtered.joined(separator: ", "))
+        } else {
+            title = chat_title
+        }
+        chat_title_bar.title = title
         //Rotate tableview to display upside down so elements load upward instead of downward
         tableView.transform = CGAffineTransform(rotationAngle: -(CGFloat)(Double.pi));
         //Set rowHeight to automatice
@@ -97,9 +106,16 @@ class ChatView: UIViewController, UITableViewDelegate, UITableViewDataSource, Me
         if (UserDefaults.standard.object(forKey: "ColorFront") != nil) {
             colorFront = UserDefaults.standard.integer(forKey: "ColorFront")
         }
-        let JSONString = "{\"Type\": 1,\"Data\":{\"Message\":{\"message\":\"\(messageTextField.text ?? "")\", \"chatID\":\"\(chat_id )\", \"userFrom\":\"\(UserDefaults.standard.string(forKey: "Username")!)\",\"colorBack\":\"\(colorBack)\",\"colorFront\":\"\(colorFront)\"}}}"
-        TabBarController.socket.write(string: JSONString)
-        messageTextField.text = ""
+        if (chat_type != "Direct Message")
+        {
+            let JSONString = "{\"Type\": 1,\"Data\":{\"Message\":{\"message\":\"\(messageTextField.text ?? "")\", \"chatID\":\"\(chat_id )\", \"userFrom\":\"\(UserDefaults.standard.string(forKey: "Username")!)\",\"colorBack\":\"\(colorBack)\",\"colorFront\":\"\(colorFront)\"}}}"
+            TabBarController.socket.write(string: JSONString)
+            messageTextField.text = ""
+        } else {
+            let JSONString = "{\"Type\": 5,\"Data\":{\"Message\":{\"message\":\"\(messageTextField.text ?? "")\", \"chatID\":\"\(chat_id )\", \"userFrom\":\"\(UserDefaults.standard.string(forKey: "Username")!)\",\"colorBack\":\"\(colorBack)\",\"colorFront\":\"\(colorFront)\",\"chatTitle\":\"\(chat_title)\"}}}"
+            TabBarController.socket.write(string: JSONString)
+            messageTextField.text = ""
+        }
     }
     
     

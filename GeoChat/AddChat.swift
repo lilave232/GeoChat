@@ -19,11 +19,16 @@ class AddChat: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, I
     
     var delegate: updateMap?
     
-    var imagePressed = ""
+    var imagePressed = "Yellow_Location_Marker"
     
     let availablePrivacySettings = ["All In Range", "Only Friends", "Direct Message"]
     
+    @IBOutlet weak var chooseTitleLabel: UILabel!
+    
+    
     @IBOutlet weak var privacySettingsTextField: UITextField!
+    
+    @IBOutlet weak var createButton: UIBarButtonItem!
     
     let privacyPicker = UIPickerView()
     
@@ -35,7 +40,6 @@ class AddChat: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, I
     @IBOutlet weak var titleText: UITextField!
     
     func userChangedImage(imageString: String?) {
-        print(imageString)
         imagePressed = imageString!
         display_image.setImage(UIImage(named:imagePressed), for: .normal)
     }
@@ -64,14 +68,30 @@ class AddChat: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, I
     @IBAction func createButton(_ sender: Any) {
         //SEND INFO TO SERVER
         //SEGUE TO CHAT
-        if (titleText.text! != "" && Location != nil) {
-            CreateChat()
+        if (privacySettingsTextField.text == "Direct Message") {
+            if (Location != nil) {
+                let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+                let vc1 = mainStoryboard.instantiateViewController(withIdentifier: "FriendsPicker") as! FriendsPickerTableView
+                vc1.Name = titleText.text!
+                vc1.Username = UserDefaults.standard.string(forKey: "Username")!
+                vc1.Longitude = Location!.coordinate.longitude
+                vc1.Latitude = Location!.coordinate.latitude
+                vc1.Private = privacySettingsTextField.text!
+                vc1.imagePressed = imagePressed
+                self.show(vc1,sender:nil)
+            }
+        } else {
+            if (titleText.text! != "" && Location != nil) {
+                CreateChat()
+            }
         }
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
+    
+    
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return availablePrivacySettings[row]
@@ -83,6 +103,13 @@ class AddChat: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, I
     
     func pickerView( _ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         privacySettingsTextField.text = availablePrivacySettings[row]
+        if (privacySettingsTextField.text == "Direct Message") {
+            createButton.title = "Select Friends"
+            chooseTitleLabel.text = "Choose a title (Optional):"
+        } else {
+            createButton.title = "Create"
+            chooseTitleLabel.text = "Choose a title:"
+        }
     }
     
     func CreateChat () {
@@ -98,16 +125,25 @@ class AddChat: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, I
         Alamofire.request(URL_USER_CREATE_CHAT, method: .post, parameters: parameters).responseJSON
             {
                 response in
-                print(response)
                 if let result = response.result.value {
                     let jsonData = result as! NSDictionary
                     if(!(jsonData.value(forKey: "error") as! Bool)){
                         //let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
                         //let vc = mainStoryboard.instantiateViewController(withIdentifier: "Map") as! MapView
                         //self.present(vc, animated: true, completion: nil)
-                        self.delegate?.updateMap()
+                        //self.delegate?.updateMap()
+                        //self.tabBarController?.selectedIndex = 1
+                        //tabBarController.selectedViewController?.show(desiredVC, sender: nil)
+                        self.navigationController?.popToRootViewController(animated: true)
+                        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+                        let desiredVC = storyboard.instantiateViewController(withIdentifier: "Chat") as! ChatView
+                        desiredVC.chat_title = self.titleText.text!
+                        desiredVC.chat_id = jsonData.value(forKey: "message") as! String
+                        desiredVC.chat_type = self.privacySettingsTextField.text!
+                        self.tabBarController!.selectedIndex = 1
+                        self.tabBarController!.selectedViewController?.show(desiredVC, sender: nil)
                         //self.dismiss(animated: false, completion: nil)
-                        self.navigationController?.popViewController(animated: true)
+                        //self.navigationController?.popViewController(animated: true)
                     }else{
                         print("Unsuccessful")
                     }

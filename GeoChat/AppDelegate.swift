@@ -29,10 +29,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let tabBarController = storyboard.instantiateViewController(withIdentifier: "TabBarController") as! TabBarController
             
             tabBarController.selectedIndex = tab
-            if (identifier != "") {
-                let desiredVC = storyboard.instantiateViewController(withIdentifier: identifier) as! UIViewController
+            if (identifier == "Chat") {
+                let desiredVC = storyboard.instantiateViewController(withIdentifier: identifier) as! ChatView
                 if tabBarController.selectedIndex == tab{
-                    
+                    desiredVC.chat_id = payload["chatID"] as! String
+                    desiredVC.chat_title = payload["chatTitle"] as! String
                     // Option 1: If you want to present
                     tabBarController.selectedViewController?.show(desiredVC, sender: nil)
                     
@@ -72,7 +73,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ) {
         let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
         let token = tokenParts.joined()
-        UpdateToken(Username: UserDefaults.standard.string(forKey: "Username"), Token: token)
+        if (UserDefaults.standard.object(forKey: "Username") != nil) {
+            UpdateToken(Username: UserDefaults.standard.string(forKey: "Username"), Token: token)
+        }
         print("Device Token: \(token)")
     }
     
