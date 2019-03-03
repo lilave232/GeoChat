@@ -17,8 +17,6 @@ protocol updateMap: class {
 
 class AddChat: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, ImageChangedDelegate {
     
-    var delegate: updateMap?
-    
     var imagePressed = "Yellow_Location_Marker"
     
     let availablePrivacySettings = ["All In Range", "Only Friends", "Direct Message"]
@@ -142,6 +140,8 @@ class AddChat: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, I
                         desiredVC.chat_type = self.privacySettingsTextField.text!
                         self.tabBarController!.selectedIndex = 1
                         self.tabBarController!.selectedViewController?.show(desiredVC, sender: nil)
+                        let JSONString = "{\"Type\": 6,\"Data\":{\"Chat\":{\"Longitude\":\"\(self.Location!.coordinate.longitude)\",\"Latitude\":\"\(self.Location!.coordinate.latitude)\"}}}"
+                        TabBarController.socket.write(string: JSONString)
                         //self.dismiss(animated: false, completion: nil)
                         //self.navigationController?.popViewController(animated: true)
                     }else{

@@ -179,7 +179,9 @@ class FriendsPickerTableView: UITableViewController, UISearchResultsUpdating, ad
                         desiredVC.chat_title = self.Name
                         desiredVC.chat_id = jsonData.value(forKey: "message") as! String
                         desiredVC.chat_type = self.Private
-                        self.navigationController?.tabBarController!.selectedIndex = 1
+                        let JSONString = "{\"Type\": 8,\"Data\":{\"Users\":\"\(self.Name)\"}}"
+                        TabBarController.socket.write(string: JSONString)
+                        self.navigationController?.tabBarController!.selectedIndex = 2
                         self.navigationController?.tabBarController!.selectedViewController?.show(desiredVC, sender: nil)
                         self.navigationController?.popToRootViewController(animated: true)
                     }else{

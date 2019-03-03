@@ -15,18 +15,34 @@ protocol MessageReceivedDelegate: class {
     func updateMessages(_ messages: String?)
     func connectChat()
 }
+protocol NewMessageLocalViewDelegate: class {
+    func updateChats()
+}
+protocol NewMessageSubscribedViewDelegate: class {
+    func updateChats()
+}
+protocol MapsDelegate: class {
+    func updateMap()
+}
 
 class TabBarController: UITabBarController, WebSocketDelegate {
     static var mdelegate: MessageReceivedDelegate?
+    static var MapDelegate: MapsDelegate?
+    static var NewMessageLocalDelegate: NewMessageLocalViewDelegate?
+    static var NewMessageSubscribedDelegate: NewMessageSubscribedViewDelegate?
     static var socket = WebSocket(url: URL(string: AppDelegate.URLConnection + "/")!, protocols: ["echo-protocol"])
     weak var messageDelegate: MessageReceivedDelegate?
     static var location: CLLocation? = nil
     
     func websocketDidConnect(socket: WebSocketClient) {
         print("Connected")
-        let JSONString = "{\"Type\": 0,\"Data\":{\"User\":{\"Username\":\"\(UserDefaults.standard.string(forKey: "Username")! ?? "")\"}}}"
-        TabBarController.socket.write(string: JSONString)
         TabBarController.mdelegate?.connectChat()
+        if (TabBarController.location != nil)
+        {
+            print(TabBarController.location!)
+            let JSONString = "{\"Type\": 0,\"Data\":{\"User\":{\"Username\":\"\(UserDefaults.standard.string(forKey: "Username")! )\",\"Longitude\":\"\(TabBarController.location?.coordinate.longitude ?? 0.0)\",\"Latitude\":\"\(TabBarController.location?.coordinate.latitude ?? 0.0)\",\"Radius\":\"\(Float(UserDefaults.standard.double(forKey: "radius")))\"}}}"
+            TabBarController.socket.write(string: JSONString)
+        }
     }
     
     func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
@@ -34,11 +50,39 @@ class TabBarController: UITabBarController, WebSocketDelegate {
     }
     
     func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
-        TabBarController.mdelegate?.updateMessages(text)
+        let message = stringToJSON(message: text)
+        print(message)
+        if (message["type"] as! Int == 0)
+        {
+            TabBarController.mdelegate?.updateMessages(text)
+        }
+        if (message["type"] as! Int == 1)
+        {
+            TabBarController.MapDelegate?.updateMap()
+        }
+        if (message["type"] as! Int == 2)
+        {
+            print("Update Chats")
+            TabBarController.NewMessageLocalDelegate?.updateChats()
+            TabBarController.NewMessageSubscribedDelegate?.updateChats()
+        }
     }
     
     func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
         
+    }
+    
+    func stringToJSON(message: String) -> [String:AnyObject] {
+        var jsonData:[String:AnyObject]? = nil
+        do{
+            if let json = message.data(using: String.Encoding.utf8){
+                jsonData = try JSONSerialization.jsonObject(with: json, options: .allowFragments) as? [String:AnyObject]
+            }
+        }catch {
+            print(error.localizedDescription)
+            jsonData = ["String":"Empty" as AnyObject]
+        }
+        return jsonData!
     }
     
     
@@ -53,12 +97,15 @@ class TabBarController: UITabBarController, WebSocketDelegate {
     
     @objc func viewDidBecomeActive(){
         TabBarController.socket.delegate = self
+        print("Set Delegate To Server 1")
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        print("Set Delegate To Server 2")
         TabBarController.socket.delegate = self
         if (!TabBarController.socket.isConnected) {
             TabBarController.socket.connect()
+        } else {
         }
     }
     override func viewWillDisappear(_ animated: Bool) {

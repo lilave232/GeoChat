@@ -10,7 +10,13 @@ import Foundation
 import UIKit
 import Alamofire
 
-class SubscribedView: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class SubscribedView: UIViewController, UITableViewDelegate, UITableViewDataSource, NewMessageSubscribedViewDelegate {
+    
+    func updateChats() {
+        chats = TabBarController.subscribed
+        GetChats()
+        self.tableView.reloadData()
+    }
     
     var chats:[NSDictionary] = []
     
@@ -25,6 +31,10 @@ class SubscribedView: UIViewController, UITableViewDelegate, UITableViewDataSour
         chats = TabBarController.subscribed
         GetChats()
         self.tableView.reloadData()
+        TabBarController.NewMessageSubscribedDelegate = self
+        print(TabBarController.NewMessageSubscribedDelegate)
+        let JSONString = "{\"Type\": 0,\"Data\":{\"User\":{\"Username\":\"\(UserDefaults.standard.string(forKey: "Username")! )\",\"Longitude\":\"\(TabBarController.location?.coordinate.longitude ?? 0.0)\",\"Latitude\":\"\(TabBarController.location?.coordinate.latitude ?? 0.0)\",\"Radius\":\"\(Float(UserDefaults.standard.double(forKey: "radius")))\"}}}"
+        TabBarController.socket.write(string: JSONString)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -213,6 +223,10 @@ class SubscribedView: UIViewController, UITableViewDelegate, UITableViewDataSour
                     let jsonData = result as! NSDictionary
                     if(!(jsonData.value(forKey: "error") as! Bool)){
                         print("Unsubscribed")
+                        if (jsonData.value(forKey: "message") as! String == "Chat Deleted"){
+                            let JSONString = "{\"Type\": 7,\"Data\":{\"Users\":\"\(chatTitle)\"}}"
+                            TabBarController.socket.write(string: JSONString)
+                        }
                         self.GetChats()
                     }else{
                         print("Unsuccessful")

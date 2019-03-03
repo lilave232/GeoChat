@@ -108,11 +108,11 @@ class ChatView: UIViewController, UITableViewDelegate, UITableViewDataSource, Me
         }
         if (chat_type != "Direct Message")
         {
-            let JSONString = "{\"Type\": 1,\"Data\":{\"Message\":{\"message\":\"\(messageTextField.text ?? "")\", \"chatID\":\"\(chat_id )\", \"userFrom\":\"\(UserDefaults.standard.string(forKey: "Username")!)\",\"colorBack\":\"\(colorBack)\",\"colorFront\":\"\(colorFront)\"}}}"
+            let JSONString = "{\"Type\": 1,\"Data\":{\"Message\":{\"message\":\"\(messageTextField.text ?? "")\", \"chatID\":\"\(chat_id )\", \"userFrom\":\"\(UserDefaults.standard.string(forKey: "Username")!)\",\"colorBack\":\"\(colorBack)\",\"colorFront\":\"\(colorFront)\",\"longitude\":\"\(TabBarController.location?.coordinate.longitude ?? 0.0)\",\"latitude\":\"\(TabBarController.location?.coordinate.latitude ?? 0.0)\"}}}"
             TabBarController.socket.write(string: JSONString)
             messageTextField.text = ""
         } else {
-            let JSONString = "{\"Type\": 5,\"Data\":{\"Message\":{\"message\":\"\(messageTextField.text ?? "")\", \"chatID\":\"\(chat_id )\", \"userFrom\":\"\(UserDefaults.standard.string(forKey: "Username")!)\",\"colorBack\":\"\(colorBack)\",\"colorFront\":\"\(colorFront)\",\"chatTitle\":\"\(chat_title)\"}}}"
+            let JSONString = "{\"Type\": 5,\"Data\":{\"Message\":{\"message\":\"\(messageTextField.text ?? "")\", \"chatID\":\"\(chat_id )\", \"userFrom\":\"\(UserDefaults.standard.string(forKey: "Username")!)\",\"colorBack\":\"\(colorBack)\",\"colorFront\":\"\(colorFront)\",\"chatTitle\":\"\(chat_title)\",\"longitude\":\"\(TabBarController.location?.coordinate.longitude ?? 0.0)\",\"latitude\":\"\(TabBarController.location?.coordinate.latitude ?? 0.0)\"}}}"
             TabBarController.socket.write(string: JSONString)
             messageTextField.text = ""
         }

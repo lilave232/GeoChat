@@ -11,8 +11,17 @@ import Alamofire
 import CoreLocation
 
 
-class LocalView: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class LocalView: UIViewController, UITableViewDelegate, UITableViewDataSource, NewMessageLocalViewDelegate {
     
+    func updateChats() {
+        local_chats = []
+        local_chats = controller!.local_chats
+        print("Updating Local")
+        if (TabBarController.location != nil) {
+            GetChats(location: TabBarController.location!.coordinate)
+        }
+    }
+
     var local_chats:[NSDictionary] = []
     @IBOutlet weak var tableView: UITableView!
     var controller: TabBarController? = nil
@@ -20,6 +29,7 @@ class LocalView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         controller = self.tabBarController as? TabBarController
+        TabBarController.NewMessageLocalDelegate = self
         local_chats = []
         local_chats = controller!.local_chats
         tableView.reloadData()
@@ -27,9 +37,13 @@ class LocalView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         print("LOCAL VIEW SHOWING")
+        local_chats = []
+        local_chats = controller!.local_chats
         if (TabBarController.location != nil) {
             GetChats(location: TabBarController.location!.coordinate)
         }
+        let JSONString = "{\"Type\": 0,\"Data\":{\"User\":{\"Username\":\"\(UserDefaults.standard.string(forKey: "Username")! )\",\"Longitude\":\"\(TabBarController.location?.coordinate.longitude ?? 0.0)\",\"Latitude\":\"\(TabBarController.location?.coordinate.latitude ?? 0.0)\",\"Radius\":\"\(Float(UserDefaults.standard.double(forKey: "radius")))\"}}}"
+        TabBarController.socket.write(string: JSONString)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -212,6 +226,8 @@ class LocalView: UIViewController, UITableViewDelegate, UITableViewDataSource {
                     let jsonData = result as! NSDictionary
                     if(!(jsonData.value(forKey: "error") as! Bool)){
                         print("Deleted")
+                        let JSONString = "{\"Type\": 6,\"Data\":{\"Chat\":{\"Longitude\":\"\(TabBarController.location?.coordinate.longitude ?? 0.0)\",\"Latitude\":\"\(TabBarController.location?.coordinate.latitude ?? 0.0)\"}}}"
+                        TabBarController.socket.write(string: JSONString)
                         self.GetChats(location: TabBarController.location!.coordinate)
                         self.GetSubscribed()
                     }else{
