@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:/Users/averypozzobon/Documents/GeoChat/GeoChatXcode/GeoChat/CameraPreviewController.swift">
+   </FileRef>
+   <FileRef
       location = "group:LaurierUniversity.gpx">
    </FileRef>
    <FileRef

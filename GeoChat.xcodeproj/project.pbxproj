@@ -11,7 +11,6 @@
 		E511512E22318DF900335927 /* DBHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E511512D22318DF900335927 /* DBHandler.swift */; };
 		E51151302231A49200335927 /* DateFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E511512F2231A49200335927 /* DateFunctions.swift */; };
 		E51151362231DD2200335927 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51151352231DD2200335927 /* CameraViewController.swift */; };
-		E51151382231E68D00335927 /* CameraPreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51151372231E68D00335927 /* CameraPreviewController.swift */; };
 		E511513A223343CC00335927 /* CheckInternet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5115139223343CC00335927 /* CheckInternet.swift */; };
 		E51B15A822040F9500EE6164 /* AddChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51B15A722040F9500EE6164 /* AddChat.swift */; };
 		E51B15AA220428E300EE6164 /* ImageCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51B15A9220428E300EE6164 /* ImageCollectionCell.swift */; };
@@ -34,6 +33,7 @@
 		E553679021FD67F400894493 /* Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553678F21FD67F400894493 /* Register.swift */; };
 		E556AE9B221FEEAE000DD14B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E556AE9A221FEEAE000DD14B /* Constants.swift */; };
 		E556AE9D221FEFD0000DD14B /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = E556AE9C221FEFD0000DD14B /* .gitignore */; };
+		E55742F722337A01009D4F72 /* CameraPreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55742F622337A01009D4F72 /* CameraPreviewController.swift */; };
 		E55F38EC221FDE3800E98537 /* ProfileSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55F38EB221FDE3800E98537 /* ProfileSettings.swift */; };
 		E56DCA4822162E2D00709C1F /* SubscribedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56DCA4722162E2D00709C1F /* SubscribedView.swift */; };
 		E56DCA4A2216339900709C1F /* SubscribedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56DCA492216339900709C1F /* SubscribedCell.swift */; };
@@ -71,7 +71,6 @@
 		E511512D22318DF900335927 /* DBHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBHandler.swift; sourceTree = "<group>"; };
 		E511512F2231A49200335927 /* DateFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFunctions.swift; sourceTree = "<group>"; };
 		E51151352231DD2200335927 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
-		E51151372231E68D00335927 /* CameraPreviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CameraPreviewController.swift; path = ../CameraPreviewController.swift; sourceTree = "<group>"; };
 		E5115139223343CC00335927 /* CheckInternet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInternet.swift; sourceTree = "<group>"; };
 		E51B15A722040F9500EE6164 /* AddChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChat.swift; sourceTree = "<group>"; };
 		E51B15A9220428E300EE6164 /* ImageCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionCell.swift; sourceTree = "<group>"; };
@@ -100,6 +99,7 @@
 		E553678F21FD67F400894493 /* Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Register.swift; sourceTree = "<group>"; };
 		E556AE9A221FEEAE000DD14B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E556AE9C221FEFD0000DD14B /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; name = .gitignore; path = ../.gitignore; sourceTree = "<group>"; };
+		E55742F622337A01009D4F72 /* CameraPreviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CameraPreviewController.swift; path = /Users/averypozzobon/Documents/GeoChat/GeoChatXcode/GeoChat/CameraPreviewController.swift; sourceTree = "<absolute>"; };
 		E55F38EB221FDE3800E98537 /* ProfileSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettings.swift; sourceTree = "<group>"; };
 		E56DCA4722162E2D00709C1F /* SubscribedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribedView.swift; sourceTree = "<group>"; };
 		E56DCA492216339900709C1F /* SubscribedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribedCell.swift; sourceTree = "<group>"; };
@@ -188,8 +188,8 @@
 				E553678F21FD67F400894493 /* Register.swift */,
 				E553678921FD5D3D00894493 /* Assets.xcassets */,
 				E553675F21FD5BC500894493 /* Main.storyboard */,
+				E55742F622337A01009D4F72 /* CameraPreviewController.swift */,
 				E51151352231DD2200335927 /* CameraViewController.swift */,
-				E51151372231E68D00335927 /* CameraPreviewController.swift */,
 				E511512D22318DF900335927 /* DBHandler.swift */,
 				E5DC49CB223098C90031A1C2 /* CoreData.xcdatamodeld */,
 				E54666CC2227773100C46D5C /* FriendsPickerCell.swift */,
@@ -457,6 +457,7 @@
 				E5DE2911220E478100C82C27 /* TabBarController.swift in Sources */,
 				E54666CB2227703600C46D5C /* FriendsPickerTableView.swift in Sources */,
 				E51B15A822040F9500EE6164 /* AddChat.swift in Sources */,
+				E55742F722337A01009D4F72 /* CameraPreviewController.swift in Sources */,
 				E5386415220FBA87009ABFC8 /* ChatView.swift in Sources */,
 				E54666CD2227773100C46D5C /* FriendsPickerCell.swift in Sources */,
 				E553678C21FD657800894493 /* LoginRegister.swift in Sources */,
@@ -478,7 +479,6 @@
 				E511512E22318DF900335927 /* DBHandler.swift in Sources */,
 				E56DCA4822162E2D00709C1F /* SubscribedView.swift in Sources */,
 				E553675A21FD5BC400894493 /* AppDelegate.swift in Sources */,
-				E51151382231E68D00335927 /* CameraPreviewController.swift in Sources */,
 				E553675C21FD5BC500894493 /* MapView.swift in Sources */,
 				E5827DBF2213C388005CCEB2 /* AddFriends.swift in Sources */,
 				E556AE9B221FEEAE000DD14B /* Constants.swift in Sources */,
