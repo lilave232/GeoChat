@@ -11,20 +11,25 @@ import GoogleMaps
 import CoreLocation
 import Alamofire
 
-
 class MapView: UIViewController, CLLocationManagerDelegate, MapsDelegate {
     
     func updateMap() {
         addRadiusCircle(location: locValue!)
     }
     
+    func didDisconnect() {
+        addChatButton.isEnabled = false
+    }
+    
+    func didConnect() {
+        addChatButton.isEnabled = true
+    }
+    
     @IBOutlet weak var mapView: GMSMapView!
     let locationManager = CLLocationManager()
     var locValue: CLLocation? = nil
-    //var circle: MKCircle? = nil
     @IBOutlet weak var addChatButton: UIButton!
     var circ: GMSCircle? = nil
-    var controller: TabBarController? = nil
     var radius = 1000.00
     typealias Marker = (ID:String,Marker:GMSMarker)
     var Markers:[Marker] = []
@@ -43,15 +48,18 @@ class MapView: UIViewController, CLLocationManagerDelegate, MapsDelegate {
         addChatButton.layer.shadowOffset = CGSize(width: 1, height: 1)
         addChatButton.layer.shadowRadius = 5
         addChatButton.layer.shadowOpacity = 1.0
-        controller = self.tabBarController as? TabBarController
         TabBarController.MapDelegate = self
-        // Do any additional setup after loading the view, typically from a nib.
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         checkLocationAuthorizationStatus()
         if (locValue != nil) {
             addRadiusCircle(location: locValue!)
+        }
+        if (!TabBarController.socket.isConnected) {
+            TabBarController.socket.connect()
+        } else {
+            addChatButton.isEnabled = true
         }
     }
     
@@ -80,10 +88,8 @@ class MapView: UIViewController, CLLocationManagerDelegate, MapsDelegate {
     
     func checkLocationAuthorizationStatus() {
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-            //5
         } else {
             self.locationManager.requestAlwaysAuthorization()
-            // For use in foreground
             self.locationManager.requestWhenInUseAuthorization()
         }
     }
@@ -91,42 +97,32 @@ class MapView: UIViewController, CLLocationManagerDelegate, MapsDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if (locValue == nil) {
-            locValue = manager.location
-            TabBarController.location = locValue
-            mapView.camera = GMSCameraPosition(target: locValue!.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
-            UpdateLocationFunction(Location: (manager.location)!)
-            self.addRadiusCircle(location:(manager.location)!)
+            circ = GMSCircle(position: manager.location!.coordinate, radius: radius)
+            self.locationChanged(location: manager.location!)
         } else {
             let distanceInMeters = manager.location?.distance(from: locValue!)
             if (distanceInMeters! > Double(100)) {
-                locValue = manager.location
-                TabBarController.location = locValue
-                mapView.camera = GMSCameraPosition(target: locValue!.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
-                UpdateLocationFunction(Location: (manager.location)!)
-                self.addRadiusCircle(location:(manager.location)!)
+                self.locationChanged(location: manager.location!)
             }
         }
     }
     
+    func locationChanged(location:CLLocation){
+        locValue = location
+        TabBarController.location = locValue
+        mapView.camera = GMSCameraPosition(target: locValue!.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
+        UpdateLocationFunction(Location: (location))
+        self.addRadiusCircle(location:(location))
+    }
+    
     func addRadiusCircle(location: CLLocation){
-        //mapView.clear()
-        if (circ == nil) {
-            circ = GMSCircle(position: location.coordinate, radius: radius)
-            circ!.fillColor = UIColor(hex: 0xFFDC00, a: 0.1)
-            circ!.strokeColor = UIColor(hex: 0xFFDC00, a: 1)
-            circ!.strokeWidth = 4
-            circ!.map = mapView
-        } else {
-            circ!.map = nil
-            circ = GMSCircle(position: location.coordinate, radius: radius)
-            circ!.fillColor = UIColor(hex: 0xFFDC00, a: 0.1)
-            circ!.strokeColor = UIColor(hex: 0xFFDC00, a: 1)
-            circ!.strokeWidth = 4
-            circ!.map = mapView
-        }
-        //Get Chats
+        circ!.position = location.coordinate
+        circ!.radius = radius
+        circ!.fillColor = UIColor(hex: 0xFFDC00, a: 0.1)
+        circ!.strokeColor = UIColor(hex: 0xFFDC00, a: 1)
+        circ!.strokeWidth = 4
+        circ!.map = mapView
         GetChats(location: location.coordinate)
-        //GetSubscribed()
     }
 
     func UpdateLocationFunction (Location: CLLocation) {
@@ -153,7 +149,7 @@ class MapView: UIViewController, CLLocationManagerDelegate, MapsDelegate {
     }
 
     func GetChats(location: CLLocationCoordinate2D) {
-        self.controller!.local_chats = []
+        TabBarController.local_chats = []
         let parameters: Parameters=[
             "Username":UserDefaults.standard.object(forKey: "Username")!,
             "Longitude":location.longitude,
@@ -165,61 +161,59 @@ class MapView: UIViewController, CLLocationManagerDelegate, MapsDelegate {
         {
             response in
             if let result = response.result.value {
-                var local_markers:[Marker] = []
                 let jsonData = result as! NSDictionary
                 if(!(jsonData.value(forKey: "error") as! Bool)){
                     let array = jsonData.value(forKey: "chats") as! [NSDictionary]
-                    array.forEach({
-                        let coord = CLLocation(latitude: $0.value(forKey: "Latitude") as! Double, longitude: $0.value(forKey: "Longitude") as! Double).coordinate
-                        let image = ($0.value(forKey: "Image") as! String)
-                        let title = ($0.value(forKey: "chat_name") as! String)
-                        let marker = GMSMarker(position: coord)
-                        let pinImage = UIImage(named:image)
-                        //let size = CGSize(width: width, height: height)
-                        //UIGraphicsBeginImageContext(size)
-                        //pinImage!.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
-                        //let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
-                        marker.title = title
-                        marker.icon = pinImage
-                        //marker.map = self.mapView
-                        let marker1 = Marker($0.value(forKey:"chat_id") as! String,marker)
-                        local_markers.append(marker1)
-                    })
-                    self.controller!.local_chats = array
+                    self.MakeMarkers(array1: array)
+                    TabBarController.local_chats = array
                 }else{
                     print("Unsuccessful")
+                    self.MakeMarkers(array1:nil)
                 }
-                //print(local_markers)
-                self.AddMarkers(markers:local_markers)
             }
         }
     }
     
+    func MakeMarkers(array1:[NSDictionary]?) {
+        var local_markers:[Marker] = []
+        if let array = array1 {
+            array.forEach({
+                let coord = CLLocation(latitude: $0.value(forKey: "Latitude") as! Double, longitude: $0.value(forKey: "Longitude") as! Double).coordinate
+                let image = ($0.value(forKey: "Image") as! String)
+                let title = ($0.value(forKey: "chat_name") as! String)
+                let marker = GMSMarker(position: coord)
+                let pinImage = UIImage(named:image)
+                marker.title = title
+                marker.icon = pinImage
+                let marker1 = Marker($0.value(forKey:"chat_id") as! String,marker)
+                local_markers.append(marker1)
+            })
+        }
+        self.AddMarkers(markers:local_markers)
+    }
+    
     func AddMarkers(markers:[Marker]){
+        print(self.Markers)
+        print(markers)
         markers.forEach { (arg0) in
             
             let (ID, Marker) = arg0
             if (!MapContains(a: self.Markers, v: (ID,Marker))){
-                print("Adding Marker")
                 Marker.map = self.mapView
                 self.Markers.append(arg0)
             }
         }
-        print(Markers)
-        //print(self.markers)
-        var deleted:[Int] = []
-        for i in self.Markers.enumerated(){
+        for i in self.Markers.enumerated().reversed(){
             let (index,element) = i
             if (!MapContains(a:markers, v:element)) {
-                print("Remove Marker")
+                print(index)
                 element.Marker.map = nil
-                deleted.append(index)
+                self.Markers.remove(at: index)
             }
         }
-        for i in deleted{
-            self.Markers.remove(at: i)
-        }
+        print(self.Markers.count)
     }
+    
     func MapContains(a:[(String, GMSMarker)], v:(String,GMSMarker)) -> Bool {
         let (c1, _) = v
         for (v1, _) in a { if v1 == c1 { return true } }
@@ -239,7 +233,6 @@ class MapView: UIViewController, CLLocationManagerDelegate, MapsDelegate {
                     let jsonData = result as! NSDictionary
                     if(!(jsonData.value(forKey: "error") as! Bool)){
                         let array = jsonData.value(forKey: "chats") as! [NSDictionary]
-                        print("Checked Chats")
                         TabBarController.subscribed = array
                     }else{
                         print("Unsuccessful")
@@ -247,7 +240,6 @@ class MapView: UIViewController, CLLocationManagerDelegate, MapsDelegate {
                 }
         }
     }
-    //MAPS API KEY AIzaSyCe1BfQ2Bdcb50fExIsxnGXgH9CzbbJ3nk
 }
 
 

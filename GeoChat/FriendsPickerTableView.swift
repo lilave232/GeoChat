@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import CoreLocation
 import Alamofire
+import CoreData
 
 class FriendsPickerTableView: UITableViewController, UISearchResultsUpdating, addFriendProtocol {
     /*
@@ -25,6 +26,7 @@ class FriendsPickerTableView: UITableViewController, UISearchResultsUpdating, ad
     var Longitude:CLLocationDegrees? = nil
     var Latitude:CLLocationDegrees? = nil
     var Private = ""
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var imagePressed = ""
     
     func addFriend(User: String) {
@@ -43,14 +45,16 @@ class FriendsPickerTableView: UITableViewController, UISearchResultsUpdating, ad
     
     var selectedFriends:[String] = []
     var Friends:[String] = []
+    var FriendsDB:[String] = []
+    var FriendsOnline:[String] = []
     var filteredFriends = [String]()
+    let DB = DBHandler()
     
     override func viewWillAppear(_ animated: Bool) {
-        tableView.reloadData()
-        if (Friends.count == 0) {
-            GetFriends(Username: UserDefaults.standard.string(forKey: "Username"))
-        }
-        print(Name)
+        FriendsDB = DB.GetFriendsFromDB()
+        Friends = FriendsDB
+        self.tableView.reloadData()
+        GetFriends(Username: UserDefaults.standard.string(forKey: "Username"))
     }
     
     override func viewDidLoad() {
@@ -99,7 +103,7 @@ class FriendsPickerTableView: UITableViewController, UISearchResultsUpdating, ad
         }
         return cell
     }
-    
+
     func GetFriends(Username: String?) {
         let parameters: Parameters=[
             "Username":Username!,
@@ -108,19 +112,21 @@ class FriendsPickerTableView: UITableViewController, UISearchResultsUpdating, ad
         Alamofire.request(URL_USER_GET_FRIENDS, method: .post, parameters: parameters).responseJSON
             {
                 response in
+                self.Friends = []
+                self.FriendsOnline = []
                 if let result = response.result.value {
                     let jsonData = result as! NSDictionary
                     if(!(jsonData.value(forKey: "error") as! Bool)){
                         let array = jsonData.value(forKey: "values") as! [NSDictionary]
-                        self.Friends = []
                         array.forEach(
                             {(dictionary) in
                                 let friend = dictionary.value(forKey: "Friend") as? String
-                                self.Friends.append(friend!)
+                                self.FriendsOnline.append(friend!)
                         })
                     }else{
                         print("Error Or No Friends")
                     }
+                    self.Friends = self.DB.adjustFriendsDB(Online: self.FriendsOnline,Database: self.FriendsDB)
                     self.tableView.reloadData()
                 }
         }
@@ -142,7 +148,10 @@ class FriendsPickerTableView: UITableViewController, UISearchResultsUpdating, ad
                     }else{
                         print("Friend Could Not Be Removed")
                     }
+                    self.FriendsDB = self.DB.GetFriendsFromDB()
+                    self.Friends = self.FriendsDB
                     self.tableView.reloadData()
+                    self.GetFriends(Username: UserDefaults.standard.string(forKey: "Username"))
                 }
         }
     }

@@ -38,7 +38,6 @@ class AddFriends: UITableViewController, UISearchResultsUpdating {
         resultsController.tableView.dataSource = self
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.title = "Add Friends"
-        
     }
     
     func updateSearchResults(for searchController: UISearchController) {

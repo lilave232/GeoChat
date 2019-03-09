@@ -9,4 +9,5 @@ target 'GeoChat' do
   pod "GoogleMaps"
   pod "GooglePlaces"
   pod "Starscream"
+  pod "SwiftyJSON"
 end

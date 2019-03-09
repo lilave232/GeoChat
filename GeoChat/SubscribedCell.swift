@@ -16,7 +16,6 @@ class SubscribedCell: UITableViewCell {
     @IBOutlet weak var chatText: UILabel!
     @IBOutlet weak var chatTime: UILabel!
     @IBOutlet weak var iconImage: UIImageView!
-    
-    
+    @IBOutlet weak var backgroundImage: UIImageView!
     
 }

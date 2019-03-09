@@ -8,12 +8,14 @@ PODS:
   - GooglePlaces (2.7.0):
     - GoogleMaps/Base (= 2.7.0)
   - Starscream (3.0.6)
+  - SwiftyJSON (4.2.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.3)
   - GoogleMaps
   - GooglePlaces
   - Starscream
+  - SwiftyJSON
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -21,13 +23,15 @@ SPEC REPOS:
     - GoogleMaps
     - GooglePlaces
     - Starscream
+    - SwiftyJSON
 
 SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
   GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
   GooglePlaces: 3d06e6c99654545b4738ce49648745779c25f2ef
   Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
+  SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
 
-PODFILE CHECKSUM: 21868b3e4b22cafeb7c0924682d3c0e057458609
+PODFILE CHECKSUM: acf51d2f4d3019c9f55939451399d9c3be654c0d
 
 COCOAPODS: 1.5.3

@@ -15,11 +15,15 @@ class ChatView: UIViewController, UITableViewDelegate, UITableViewDataSource, Me
     
     func connectChat() {
         print("Connecting to Chat")
-        let JSONString = "{\"Type\": 2,\"Data\":{\"Chat\":{\"chatID\":\"\(chat_id ?? "")\", \"Username\":\"\(UserDefaults.standard.string(forKey: "Username")!)\"}}}"
+        let JSONString = "{\"Type\": 2,\"Data\":{\"Chat\":{\"chatID\":\"\(chat_id)\", \"Username\":\"\(UserDefaults.standard.string(forKey: "Username")!)\", \"Longitude\":\"\(TabBarController.location?.coordinate.longitude ?? 0.0)\", \"Latitude\":\"\(TabBarController.location?.coordinate.latitude ?? 0.0)\", \"Radius\":\"\(UserDefaults.standard.string(forKey: "radius")!)\"}}}"
         TabBarController.socket.write(string: JSONString)
+        sendButton.isEnabled = true
     }
     
-    
+    func didDisconnect() {
+        sendButton.isEnabled = false
+        self.Alert(Title:"Not Connected", Message: "Cannot Load Messages")
+    }
     
     func updateMessages(_ messages: String?) {
         let messageJSON = stringToJSON(message: messages!)
@@ -29,6 +33,24 @@ class ChatView: UIViewController, UITableViewDelegate, UITableViewDataSource, Me
         colorBack.insert((messageJSON["colorBack"] as? NSString)!.integerValue, at:0)
         colorFront.insert((messageJSON["colorFront"] as? NSString)!.integerValue, at:0)
         tableView.reloadData()
+    }
+    
+    func showOutgoingMessage(width: CGFloat, height: CGFloat) {
+        let bubbleImageSize = CGSize(width: width, height: height)
+        
+        let outgoingMessageView = UIImageView(frame:
+            CGRect(x: view.frame.width - bubbleImageSize.width - 20,
+                   y: view.frame.height - bubbleImageSize.height - 86,
+                   width: bubbleImageSize.width,
+                   height: bubbleImageSize.height))
+        
+        let bubbleImage = UIImage(named: "Chat Bubble")?
+            .resizableImage(withCapInsets: UIEdgeInsets(top: 28, left: 28, bottom: 28, right: 28),
+                            resizingMode: .stretch)
+        
+        outgoingMessageView.image = bubbleImage
+        
+        view.addSubview(outgoingMessageView)
     }
     
     
@@ -50,15 +72,26 @@ class ChatView: UIViewController, UITableViewDelegate, UITableViewDataSource, Me
     var frommessageLeading = CGFloat(0)
     var frommessageTrailing = CGFloat(0)
     
+    
+    @IBOutlet weak var sendButton: UIButton!
+    
+    
+    
     @IBOutlet weak var messageTextField: UITextView!
+    
+    
+    @IBOutlet weak var messageHolder: UIView!
     
     
     @IBOutlet weak var chat_title_bar: UINavigationItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillShow(notification:)),
+                                               name: UIResponder.keyboardWillChangeFrameNotification,
+                                               object: nil)
         self.hideKeyboardWhenTappedAround()
         var title = ""
         if (chat_title.contains(",")) {
@@ -76,6 +109,16 @@ class ChatView: UIViewController, UITableViewDelegate, UITableViewDataSource, Me
         // set estimated height of row to trigger change when not eqaul estimated
         tableView.estimatedRowHeight = 140
         NotificationCenter.default.addObserver(self, selector: #selector(viewDidBecomeActive), name: UIApplication.willEnterForegroundNotification, object: nil)
+        if !TabBarController.socket.isConnected {
+            sendButton.isEnabled = false
+            self.Alert(Title:"Not Connected", Message: "Cannot Load Messages")
+        }
+    }
+    
+    func Alert (Title:String,Message: String) {
+        let alert = UIAlertController(title: Title,message: Message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     @objc func viewDidBecomeActive(){
@@ -85,17 +128,29 @@ class ChatView: UIViewController, UITableViewDelegate, UITableViewDataSource, Me
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        if (!TabBarController.socket.isConnected) {
+            TabBarController.socket.connect()
+        }
         TabBarController.mdelegate = self
-        let JSONString = "{\"Type\": 2,\"Data\":{\"Chat\":{\"chatID\":\"\(chat_id ?? "")\", \"Username\":\"\(UserDefaults.standard.string(forKey: "Username")!)\"}}}"
+        let JSONString = "{\"Type\": 2,\"Data\":{\"Chat\":{\"chatID\":\"\(chat_id)\", \"Username\":\"\(UserDefaults.standard.string(forKey: "Username")!)\"}}}"
         TabBarController.socket.write(string: JSONString)
         GetChat(chatID: chat_id)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        let JSONString = "{\"Type\": 3,\"Data\":{\"Chat\":{\"chatID\":\"\(chat_id ?? "")\", \"Username\":\"\(UserDefaults.standard.string(forKey: "Username")!)\"}}}"
+        let JSONString = "{\"Type\": 3,\"Data\":{\"Chat\":{\"chatID\":\"\(chat_id)\", \"Username\":\"\(UserDefaults.standard.string(forKey: "Username")!)\"}}}"
         TabBarController.socket.write(string: JSONString)
     }
     
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let userInfo = notification.userInfo {
+            let endFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+            self.view.frame.origin.y = 0
+            if self.view.frame.origin.y == 0 {
+                self.view.frame.origin.y -= (endFrame!.height*1)
+            }
+        }
+    }
     
     @IBAction func sendMessageAction(_ sender: Any) {
         var colorBack = 0xFFDC00
@@ -139,6 +194,10 @@ class ChatView: UIViewController, UITableViewDelegate, UITableViewDataSource, Me
         cell.selectionStyle = .none
         //Rotate cells to match rotation of tableView
         cell.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi));
+        
+        let bubbleImage = UIImage(named: "Chat Bubble")?
+            .resizableImage(withCapInsets: UIEdgeInsets(top: 27.5, left: 27.5, bottom: 27.5, right: 27.5),
+                            resizingMode: .stretch)
         //Set cell defauly positions if they weren't already set
         if (frombubbleTrailing == CGFloat(0)) {
             //Set default trailing bubble distance which is message not sent by User
@@ -160,8 +219,9 @@ class ChatView: UIViewController, UITableViewDelegate, UITableViewDataSource, Me
             cell.messageFrom.text = ""
             //change color of text to Black for User message
             cell.messageLabel.textColor = uiColorFromHex(rgbValue: colorFront[indexPath.row])
+            cell.chatBubble.image = bubbleImage
             //change color of chatBubble to Orange for User message
-            cell.chatBubble.backgroundColor = uiColorFromHex(rgbValue: colorBack[indexPath.row]) //Orange
+            cell.chatBubble.tintColor = uiColorFromHex(rgbValue: colorBack[indexPath.row]) //Orange//
         } else {
             //If message sent not sent by user flip trailing and leading distances back to normal
             cell.chatBubbleTrailing.constant = frombubbleTrailing
@@ -171,8 +231,9 @@ class ChatView: UIViewController, UITableViewDelegate, UITableViewDataSource, Me
             //change color of text to white for message not sent by user
             cell.messageLabel.textColor = uiColorFromHex(rgbValue: colorFront[indexPath.row])
             cell.messageFrom.text = from[indexPath.row]
+            cell.chatBubble.image = bubbleImage
             //change color of chatBubble to Pink for non-User message
-            cell.chatBubble.backgroundColor = uiColorFromHex(rgbValue: colorBack[indexPath.row]) //Pink
+            cell.chatBubble.tintColor = uiColorFromHex(rgbValue: colorBack[indexPath.row]) //Pink
         }
         return cell
     }
@@ -185,19 +246,12 @@ class ChatView: UIViewController, UITableViewDelegate, UITableViewDataSource, Me
         return UITableView.automaticDimension
     }
     
-    @objc func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.view.frame.origin.y == 0 {
-                self.view.frame.origin.y -= (keyboardSize.height*1)
-            }
-        }
-    }
-    
     @objc func keyboardWillHide(notification: NSNotification) {
         if self.view.frame.origin.y != 0 {
             self.view.frame.origin.y = 0
         }
     }
+    
     func stringToJSON(message: String) -> [String:AnyObject] {
         var jsonData:[String:AnyObject]? = nil
         do{

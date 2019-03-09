@@ -9,21 +9,26 @@
 import Foundation
 import UIKit
 import Alamofire
+import CoreData
 
 class FriendsTableView: UITableViewController, UISearchResultsUpdating {
     
     
     var searchController = UISearchController()
     var resultsController = UITableViewController()
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     var Friends:[String] = []
+    var FriendsDB:[String] = []
+    var FriendsOnline:[String] = []
     var filteredFriends = [String]()
+    let DB = DBHandler()
     
     override func viewWillAppear(_ animated: Bool) {
-        tableView.reloadData()
-        if (Friends.count == 0) {
-            GetFriends(Username: UserDefaults.standard.string(forKey: "Username"))
-        }
+        FriendsDB = DB.GetFriendsFromDB()
+        Friends = FriendsDB
+        self.tableView.reloadData()
+        GetFriends(Username: UserDefaults.standard.string(forKey: "Username"))
     }
     
     override func viewDidLoad() {
@@ -76,7 +81,6 @@ class FriendsTableView: UITableViewController, UISearchResultsUpdating {
                 self.searchController.isActive = false
             } else {
                 self.RemoveFriend(Username: UserDefaults.standard.string(forKey: "Username"), Friend: self.Friends[editActionsForRowAt.row])
-                self.Friends.remove(at: editActionsForRowAt.row)
             }
             self.tableView.reloadData()
         }
@@ -87,7 +91,7 @@ class FriendsTableView: UITableViewController, UISearchResultsUpdating {
         }
         Message.backgroundColor = .blue
         
-        return [Message, Unfriend]
+        return [/*Message,*/ Unfriend]
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -102,20 +106,21 @@ class FriendsTableView: UITableViewController, UISearchResultsUpdating {
         Alamofire.request(URL_USER_GET_FRIENDS, method: .post, parameters: parameters).responseJSON
             {
                 response in
-                print(response)
+                self.Friends = []
+                self.FriendsOnline = []
                 if let result = response.result.value {
                     let jsonData = result as! NSDictionary
                     if(!(jsonData.value(forKey: "error") as! Bool)){
                         let array = jsonData.value(forKey: "values") as! [NSDictionary]
-                        self.Friends = []
                         array.forEach(
                             {(dictionary) in
                                 let friend = dictionary.value(forKey: "Friend") as? String
-                                self.Friends.append(friend!)
+                                self.FriendsOnline.append(friend!)
                         })
                     }else{
                         print("Error Or No Friends")
                     }
+                    self.Friends = self.DB.adjustFriendsDB(Online: self.FriendsOnline,Database: self.FriendsDB)
                     self.tableView.reloadData()
                 }
         }
@@ -134,13 +139,23 @@ class FriendsTableView: UITableViewController, UISearchResultsUpdating {
                 if let result = response.result.value {
                     let jsonData = result as! NSDictionary
                     if(!(jsonData.value(forKey: "error") as! Bool)){
-                        self.GetFriends(Username: Username!)
+                        let context = self.appDelegate.persistentContainer.viewContext
+                        let friendFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Friends")
+                        friendFetch.fetchLimit = 1
+                        friendFetch.predicate = NSPredicate(format: "username = %@", Friend!)
+                        if let result = try? context.fetch(friendFetch) {
+                            for object in result as! [NSManagedObject] {
+                                context.delete(object)
+                            }
+                        }
                     }else{
                         print("Friend Could Not Be Removed")
                     }
+                    self.FriendsDB = self.DB.GetFriendsFromDB()
+                    self.Friends = self.FriendsDB
                     self.tableView.reloadData()
+                    self.GetFriends(Username: UserDefaults.standard.string(forKey: "Username"))
                 }
         }
     }
-    
 }

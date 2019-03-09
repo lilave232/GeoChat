@@ -19,7 +19,7 @@ class AddChat: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, I
     
     var imagePressed = "Yellow_Location_Marker"
     
-    let availablePrivacySettings = ["All In Range", "Only Friends", "Direct Message"]
+    let availablePrivacySettings = ["All In Range"/*, "Only Friends"*/, "Direct Message"]
     
     @IBOutlet weak var chooseTitleLabel: UILabel!
     
@@ -33,6 +33,7 @@ class AddChat: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, I
     var Location: CLLocation? = nil
     
     @IBOutlet weak var display_image: UIButton!
+    
     
     
     @IBOutlet weak var titleText: UITextField!

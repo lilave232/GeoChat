@@ -15,30 +15,42 @@ class LocalView: UIViewController, UITableViewDelegate, UITableViewDataSource, N
     
     func updateChats() {
         local_chats = []
-        local_chats = controller!.local_chats
+        local_chats = TabBarController.local_chats
         print("Updating Local")
         if (TabBarController.location != nil) {
             GetChats(location: TabBarController.location!.coordinate)
         }
     }
+    
+    func didDisconnect() {
+        self.tableView.isHidden = true
+    }
 
     var local_chats:[NSDictionary] = []
     @IBOutlet weak var tableView: UITableView!
     var controller: TabBarController? = nil
+    let DateHandler = DateFunctions()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         controller = self.tabBarController as? TabBarController
         TabBarController.NewMessageLocalDelegate = self
         local_chats = []
-        local_chats = controller!.local_chats
+        local_chats = TabBarController.local_chats
         tableView.reloadData()
     }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         print("LOCAL VIEW SHOWING")
+        if (!TabBarController.socket.isConnected) {
+            TabBarController.socket.connect()
+            self.tableView.isHidden = true
+        } else {
+            self.tableView.isHidden = false
+        }
         local_chats = []
-        local_chats = controller!.local_chats
+        local_chats = TabBarController.local_chats
         if (TabBarController.location != nil) {
             GetChats(location: TabBarController.location!.coordinate)
         }
@@ -58,7 +70,7 @@ class LocalView: UIViewController, UITableViewDelegate, UITableViewDataSource, N
         let id = (local_chats[indexPath.row].value(forKey: "chat_id") as! String)
         let image = (local_chats[indexPath.row].value(forKey: "Image") as! String)
         let title = (local_chats[indexPath.row].value(forKey: "chat_name") as! String)
-        let created_date = UTCToLocal(date: String((local_chats[indexPath.row].value(forKey: "created_at") as! String).split(separator: ".")[0]))
+        let created_date = DateHandler.UTCToLocal(date: String((local_chats[indexPath.row].value(forKey: "created_at") as! String).split(separator: ".")[0]))
         var latest_message = "No Messages"
         var sent_by = ""
         let dateFormatter = DateFormatter()
@@ -72,16 +84,9 @@ class LocalView: UIViewController, UITableViewDelegate, UITableViewDataSource, N
             sent_by = (local_chats[indexPath.row].value(forKey: "Sent_By") as! String)
         }
         if (local_chats[indexPath.row].value(forKey: "Time_Of_Message") as? String != nil){
-            time_of_message = UTCToLocal(date: String((local_chats[indexPath.row].value(forKey: "Time_Of_Message") as! String).split(separator: ".")[0]))
-            date = dateFormatter.date(from: time_of_message)
+            time_of_message = DateHandler.displayDate(date: local_chats[indexPath.row].value(forKey: "Time_Of_Message") as! String)
         } else {
             time_of_message = created_date
-        }
-        let diff = Calendar.current.dateComponents([.day], from: Date(), to: date!)
-        if diff.day == 0 {
-            time_of_message = DateToTime(date: time_of_message)
-        } else {
-            time_of_message = String(time_of_message.split(separator: "T")[0])
         }
         //let pinImage = UIImage(named:image)
         cell.chatName.text = title
@@ -137,34 +142,9 @@ class LocalView: UIViewController, UITableViewDelegate, UITableViewDataSource, N
         return true
     }
     
-    //convert UTC to Local
-    func UTCToLocal(date:String) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'"
-        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-        
-        let dt = dateFormatter.date(from: date)
-        dateFormatter.timeZone = TimeZone.current
-        dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'"
-        
-        return dateFormatter.string(from: dt!)
-    }
-    
-    func DateToTime(date:String) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone.current
-        dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'"
-        
-        let dt = dateFormatter.date(from: date)
-        dateFormatter.timeZone = TimeZone.current
-        dateFormatter.dateFormat = "hh:mm a"
-        
-        return dateFormatter.string(from: dt!)
-    }
-    
     
     func GetChats(location: CLLocationCoordinate2D) {
-        self.controller!.local_chats = []
+        TabBarController.local_chats = []
         let parameters: Parameters=[
             "Username":UserDefaults.standard.object(forKey: "Username")!,
             "Longitude":location.longitude,
@@ -180,9 +160,9 @@ class LocalView: UIViewController, UITableViewDelegate, UITableViewDataSource, N
                     let jsonData = result as! NSDictionary
                     if(!(jsonData.value(forKey: "error") as! Bool)){
                         let array = jsonData.value(forKey: "chats") as! [NSDictionary]
-                        self.controller!.local_chats = array
+                        TabBarController.local_chats = array
                         print("Checked Chats")
-                        self.local_chats = self.controller!.local_chats
+                        self.local_chats = TabBarController.local_chats
                     }else{
                         print("Unsuccessful")
                     }
@@ -191,7 +171,7 @@ class LocalView: UIViewController, UITableViewDelegate, UITableViewDataSource, N
         }
     }
     func Subscribe(chatID: String) {
-        self.controller!.local_chats = []
+        TabBarController.local_chats = []
         let parameters: Parameters=[
             "member":UserDefaults.standard.object(forKey: "Username")!,
             "chatID":chatID,

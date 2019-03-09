@@ -14,15 +14,19 @@ import CoreLocation
 protocol MessageReceivedDelegate: class {
     func updateMessages(_ messages: String?)
     func connectChat()
+    func didDisconnect()
 }
 protocol NewMessageLocalViewDelegate: class {
     func updateChats()
+    func didDisconnect()
 }
 protocol NewMessageSubscribedViewDelegate: class {
     func updateChats()
 }
 protocol MapsDelegate: class {
     func updateMap()
+    func didDisconnect()
+    func didConnect()
 }
 
 class TabBarController: UITabBarController, WebSocketDelegate {
@@ -33,10 +37,18 @@ class TabBarController: UITabBarController, WebSocketDelegate {
     static var socket = WebSocket(url: URL(string: AppDelegate.URLConnection + "/")!, protocols: ["echo-protocol"])
     weak var messageDelegate: MessageReceivedDelegate?
     static var location: CLLocation? = nil
+    var window = UIApplication.shared.keyWindow!
+    var v2:UIView? = nil
+    var label:UILabel? = nil
     
     func websocketDidConnect(socket: WebSocketClient) {
         print("Connected")
+        if (label != nil) {
+            window.isHidden = true
+            label = nil
+        }
         TabBarController.mdelegate?.connectChat()
+        TabBarController.MapDelegate?.didConnect()
         if (TabBarController.location != nil)
         {
             print(TabBarController.location!)
@@ -46,7 +58,22 @@ class TabBarController: UITabBarController, WebSocketDelegate {
     }
     
     func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
+        if CheckInternet.Connection() {
+            TabBarController.NewMessageLocalDelegate?.didDisconnect()
+            TabBarController.MapDelegate?.didDisconnect()
+            TabBarController.mdelegate?.didDisconnect()
+            showNoConnection(Message: "Our Servers Are Down")
+        } else {
+            TabBarController.NewMessageLocalDelegate?.didDisconnect()
+            TabBarController.MapDelegate?.didDisconnect()
+            TabBarController.mdelegate?.didDisconnect()
+            showNoConnection(Message: "You Are Not Connected To Internet")
+        }
         TabBarController.mdelegate = nil
+        /*
+        while !TabBarController.socket.isConnected {
+            TabBarController.socket.connect()
+        }*/
     }
     
     func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
@@ -86,7 +113,7 @@ class TabBarController: UITabBarController, WebSocketDelegate {
     }
     
     
-    var local_chats: [NSDictionary]! = []
+    static var local_chats: [NSDictionary]! = []
     static var subscribed: [NSDictionary]! = []
     
     override func viewDidLoad() {
@@ -99,15 +126,39 @@ class TabBarController: UITabBarController, WebSocketDelegate {
         TabBarController.socket.delegate = self
         print("Set Delegate To Server 1")
     }
+    func Alert (Title:String,Message: String) {
+        let alert = UIAlertController(title: Title,message: Message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("Set Delegate To Server 2")
         TabBarController.socket.delegate = self
-        if (!TabBarController.socket.isConnected) {
-            TabBarController.socket.connect()
-        } else {
-        }
+        TabBarController.socket.connect()
     }
+    
+    func showNoConnection(Message:String) {
+        //UIApplication.shared.statusBarFrame.height
+        v2 = UIView(frame: CGRect(x: 0, y: 0, width: window.frame.width, height: UIApplication.shared.statusBarFrame.height))
+        v2!.backgroundColor = UIColor.red
+        let bannerWindow = UIWindow(frame: CGRect(x: 0, y: 0, width: window.frame.width, height: UIApplication.shared.statusBarFrame.height))
+        bannerWindow.layer.masksToBounds = true
+        bannerWindow.backgroundColor = .clear
+        bannerWindow.rootViewController = self
+        bannerWindow.windowLevel = UIWindow.Level.statusBar
+        bannerWindow.addSubview(v2!)
+        self.window = bannerWindow
+        window.isHidden = false
+        label = UILabel(frame: CGRect(x: 0, y:0,width: window.frame.width, height: UIApplication.shared.statusBarFrame.height))
+        label!.font = UIFont(name: "System", size: 2)
+        label!.textAlignment = .center
+        label!.textColor = .white
+        label!.text = Message
+        v2!.addSubview(label!)
+        //self.Alert(Title:"Servers Are Down", Message: "Cannot Add Friends")
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
